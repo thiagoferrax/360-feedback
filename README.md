@@ -22,4 +22,4 @@ Finally, the system must control user access and authorization.
 
 #### Class diagram
 
-![class-diagram](https://github.com/thiagoferrax/360-feedback/requirements/classDiagram.png)
+![class-diagram](https://github.com/thiagoferrax/360-feedback/blob/master/requirements/classDiagram.png)
