@@ -19,14 +19,47 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
+      name: 'Companies',
+      url: '/theme/colors',
+      icon: 'icon-sitemap',
+    },
+    {
       name: 'Projects',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-chart-line',
+    },
+    {
+      name: 'Feedback Forms',
+      url: '/theme/typography',
+      icon: 'icon-document',
+    },
+    {
+      title: true,
+      name: 'Evaluation',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
       name: 'Feedbacks',
-      url: '/theme/typography',
-      icon: 'icon-pencil',
+      url: '/theme/colors',
+      icon: 'icon-handshake',
+    },
+    {
+      title: true,
+      name: 'Timeline',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
+    },
+    {
+      name: 'Events',
+      url: '/theme/colors',
+      icon: 'icon-calendar',
     },
     // {
     //   title: true,
