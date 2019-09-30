@@ -21,17 +21,17 @@ export default {
     {
       name: 'Companies',
       url: '/theme/colors',
-      icon: 'icon-sitemap',
+      icon: 'icon-briefcase',
     },
     {
       name: 'Projects',
       url: '/theme/colors',
-      icon: 'icon-chart-line',
+      icon: 'icon-people',
     },
     {
       name: 'Feedback Forms',
       url: '/theme/typography',
-      icon: 'icon-document',
+      icon: 'icon-pencil',
     },
     {
       title: true,
@@ -45,7 +45,7 @@ export default {
     {
       name: 'Feedbacks',
       url: '/theme/colors',
-      icon: 'icon-handshake',
+      icon: 'icon-check',
     },
     {
       title: true,
