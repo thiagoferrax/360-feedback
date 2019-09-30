@@ -1,16 +1,25 @@
 # 360-feedback
 
-# Requirements Overview
+## Requirements overview
 
-Team members want 360 feedback. These members belong to the same project. A member may belong to more than one project. The project is executed in a department of one of the company's units. All members need to be system users in order to be able to feedback their project teams and see the result of their feedback. A member can give more than one feedback from their team, and see the progress of their own and their team's feedback, as well as access to their progress relative to their team's feedback. A member who is not a manager will only be able to see the feedbacks about you, but you will be able to see how your rating is relative to your team and the company with respect to each feedback rating criterion.
+A project team wants 360 feedback. Team members belong to the project, but one member can belong to more than one project. The project is executed in a department of one of the company's units. All members need to use this system to give feedback to their teams and view the result of the feedback they have received.
 
-Feedback is created by the team manager and establishes criteria to be evaluated as well as a rating scale for these criteria.
-A feedback rating is associated with a team and it will not be possible to perform the same rating for more than one team at a time. Each criterion has a name, a description and will be ranked according to the rating scale. Criteria may have subcriteria and the evaluation of subcriteria impacts the evaluation of the parent criterion.
+A member can give more than one feedback to his team and see the progress of those feedbacks, as well as access the progress of the feedback the team has given him.
 
-Each project has only one manager and they will be able to view all their team feedback, including their own feedback. This manager may also have a manager above him and the latter manager will have access to all feedback from the first team.
+A non-manager member will only be able to see feedbacks about themselves, but can see how their rating is relative to the team and the company against a specified rating criteria.
 
-All members will be able to view the consolidated result of all projects in their company unit. And the consolidated of the whole company. The member can even see how his / her situation is in relation to all the members of his department and his unit.
+Feedback is created by a team member who defines the items that need to be evaluated, as well as a rating scale for these evaluations. A feedback assessment is associated with a team and it will not be possible to perform the same assessment for more than one team at a time. Each feedback item has a name, a description and will be rated according to the rating scale. Items may have sub-items and their rating affects their parents' rating.
 
-The system must provide real-time information so that team members can view their feedback as the team is ranking the criteria.
+Each project has a manager and this manager will be able to view all feedback results from his team members, including his own. This manager may also have a manager above him and the latter manager will have access to all feedback from the teams under his supervision.
+
+All members will be able to view the consolidated results of all projects in their department and company unit and the consolidated results for the entire company. The member can even see how they are doing with all members of their department and unit.
+
+The system must provide real-time information so that team members can see their feedback while the team is conducting the evaluations.
 
 Finally, the system must control user access and authorization.
+
+## Architecture overview
+
+#### Class diagram
+
+![class-diagram](https://github.com/thiagoferrax/360-feedback/requirements/classDiagram.png)
