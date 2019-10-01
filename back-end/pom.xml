@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.agile</groupId>
-	<artifactId>feedback-back-end</artifactId>
+	<artifactId>back-end</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>feedback-back-end</name>
+	<name>back-end</name>
 	<description>Feedback REST API</description>
 
 	<properties>

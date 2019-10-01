@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.agile.feedback.dtos.CompanyDTO;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.services.CompanyService;
 
 @RestController
 @RequestMapping(value = "/companies")
 public class CompanyResource {
+
+	public static final String UPDATING_COMPANY = "Updating url: {0}";
+	public static final String REMOVING_COMPANY = "Removing url, code: {0}";
+	public static final String GETTING_COMPANY_BY_ID = "Getting company summary by code: ";
 
 	Logger logger = LoggerFactory.getLogger(CompanyResource.class);
 
@@ -37,7 +42,7 @@ public class CompanyResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Company> update(@Valid @RequestBody CompanyDTO companyDto, @PathVariable String id) {
+	public ResponseEntity<Company> update(@Valid @RequestBody CompanyDTO companyDto, @PathVariable Integer id) {
 
 		logger.info(UPDATING_COMPANY, companyDto);
 

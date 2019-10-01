@@ -2,11 +2,14 @@ package com.agile.feedback.services;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.agile.feedback.dtos.CompanyDTO;
 import com.agile.feedback.exceptions.CompanyNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
@@ -55,5 +58,10 @@ public class CompanyService {
 
 		find(id);
 		repository.deleteById(id);
+	}
+
+	public Company fromDTO(@Valid CompanyDTO companyDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
