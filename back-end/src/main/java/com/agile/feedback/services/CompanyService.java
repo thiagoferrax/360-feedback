@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agile.feedback.dtos.CompanyDTO;
+import com.agile.feedback.enums.CompanyType;
 import com.agile.feedback.exceptions.CompanyNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
@@ -68,6 +69,6 @@ public class CompanyService {
 	}
 
 	public Company fromDTO(@Valid CompanyDTO companyDto) {
-		return new Company(companyDto.getId(), companyDto.getName(), companyDto.getType(), companyDto.getHeadOffice());
+		return new Company(companyDto.getId(), companyDto.getName(), CompanyType.findById(companyDto.getType()), companyDto.getHeadOffice());
 	}
 }

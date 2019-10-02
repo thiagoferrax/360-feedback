@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import com.agile.feedback.enums.CompanyType;
 import com.agile.feedback.models.Company;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CompanyDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,7 +19,6 @@ public class CompanyDTO implements Serializable {
 	private String name;
 
 	@NotNull
-	@NotEmpty
 	private Integer type;
 
 	private Company headOffice;
@@ -39,12 +39,12 @@ public class CompanyDTO implements Serializable {
 		this.name = name;
 	}
 
-	public CompanyType getType() {
-		return CompanyType.findById(type);
+	public Integer getType() {
+		return type;
 	}
 
-	public void setType(CompanyType companyType) {
-		this.type = companyType.getId();
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public Company getHeadOffice() {
@@ -54,5 +54,4 @@ public class CompanyDTO implements Serializable {
 	public void setHeadOffice(Company headOffice) {
 		this.headOffice = headOffice;
 	}
-
 }

@@ -94,6 +94,26 @@ public class Company implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	public Company getHeadOffice() {
+		return headOffice;
+	}
+
+	public void setHeadOffice(Company headOffice) {
+		this.headOffice = headOffice;
+	}
+
+	public Collection<Company> getBranches() {
+		return branches;
+	}
+
+	public void setBranches(Collection<Company> branches) {
+		this.branches = branches;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -119,25 +139,4 @@ public class Company implements Serializable {
 		return true;
 	}
 
-	public Company getHeadOffice() {
-		return headOffice;
-	}
-
-	public void setHeadOffice(Company headOffice) {
-		this.headOffice = headOffice;
-	}
-
-	public Collection<Company> getBranches() {
-		return branches;
-	}
-
-	public void setBranches(Collection<Company> branches) {
-		this.branches = branches;
-	}
-
-	public void setType(Integer type) {
-		this.type = type;
-	}
-	
-	
 }
