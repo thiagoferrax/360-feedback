@@ -16,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.agile.feedback.enums.CompanyType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Company implements Serializable {
@@ -29,6 +30,7 @@ public class Company implements Serializable {
 
 	private Integer type;
 
+	@JsonIgnore
 	@ManyToOne
 	private Company headOffice;
 
@@ -44,14 +46,12 @@ public class Company implements Serializable {
 	public Company() {
 	}
 
-	public Company(Integer id, String name, Integer type, Company headOffice, Date createdAt, Date updatedAt) {
+	public Company(Integer id, String name, CompanyType companyType, Company headOffice) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.type = type;
+		this.type = companyType.getId();
 		this.headOffice = headOffice;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
 	public Integer getId() {
@@ -93,4 +93,51 @@ public class Company implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Company other = (Company) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	public Company getHeadOffice() {
+		return headOffice;
+	}
+
+	public void setHeadOffice(Company headOffice) {
+		this.headOffice = headOffice;
+	}
+
+	public Collection<Company> getBranches() {
+		return branches;
+	}
+
+	public void setBranches(Collection<Company> branches) {
+		this.branches = branches;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	
+	
 }

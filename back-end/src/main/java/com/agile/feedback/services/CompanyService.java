@@ -1,5 +1,6 @@
 package com.agile.feedback.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class CompanyService {
 	public static final String REMOVING_COMPANY = "Removing company, id: {0}";
 	public static final String COMPANY_NOT_FOUND_FOR_ID = "Company not found for id ";
 	public static final String FINDING_COMPANY_BY_ID = "Finding company, id: {0}";
+	public static final String FINDING_ALL_COMPANIES = "Finding all companies";
 	public static final String CREATING_A_COMPANY = "Creating a company: {0}";
 
 	@Autowired
@@ -33,6 +35,11 @@ public class CompanyService {
 
 		company.setId(null);
 		return repository.save(company);
+	}
+
+	public List<Company> findAll() {
+		logger.info(FINDING_ALL_COMPANIES);
+		return repository.findAll();
 	}
 
 	public Company find(Integer companyId) {
@@ -61,7 +68,6 @@ public class CompanyService {
 	}
 
 	public Company fromDTO(@Valid CompanyDTO companyDto) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Company(companyDto.getId(), companyDto.getName(), companyDto.getType(), companyDto.getHeadOffice());
 	}
 }

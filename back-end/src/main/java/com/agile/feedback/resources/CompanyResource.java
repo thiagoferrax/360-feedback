@@ -1,5 +1,8 @@
 package com.agile.feedback.resources;
 
+import java.net.URI;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,10 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.agile.feedback.dtos.CompanyDTO;
 import com.agile.feedback.models.Company;
@@ -22,14 +27,36 @@ import com.agile.feedback.services.CompanyService;
 @RequestMapping(value = "/companies")
 public class CompanyResource {
 
-	public static final String UPDATING_COMPANY = "Updating url: {0}";
-	public static final String REMOVING_COMPANY = "Removing url, code: {0}";
-	public static final String GETTING_COMPANY_BY_ID = "Getting company summary by code: ";
+	public static final String UPDATING_COMPANY = "Updating company: {0}";
+	public static final String REMOVING_COMPANY = "Removing company, id: {0}";
+	public static final String GETTING_COMPANY_BY_ID = "Getting company by id: ";
+	public static final String GETTING_ALL_COMPANIES = "Getting all company by id: ";
 
 	Logger logger = LoggerFactory.getLogger(CompanyResource.class);
 
 	@Autowired
 	private CompanyService service;
+
+	@GetMapping(path = "/")
+	public ResponseEntity<List<Company>> getAll() {
+
+		logger.info(GETTING_ALL_COMPANIES);
+
+		List<Company> companies = service.findAll();
+
+		return ResponseEntity.ok().body(companies);
+	}
+
+	@PostMapping(value = "/")
+	public ResponseEntity<Company> findOrCreate(@Valid @RequestBody CompanyDTO companyDto) {
+
+		Company company = service.fromDTO(companyDto);
+
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(company.getId())
+				.toUri();
+
+		return ResponseEntity.created(uri).build();
+	}
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<Company> getCompanyById(@PathVariable Integer id) {
