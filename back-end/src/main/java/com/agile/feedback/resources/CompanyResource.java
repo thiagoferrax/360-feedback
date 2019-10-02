@@ -27,10 +27,11 @@ import com.agile.feedback.services.CompanyService;
 @RequestMapping(value = "/companies")
 public class CompanyResource {
 
+	public static final String CREATING_NEW_COMPANY = "Creating a new company: {0}";
 	public static final String UPDATING_COMPANY = "Updating company: {0}";
 	public static final String REMOVING_COMPANY = "Removing company, id: {0}";
-	public static final String GETTING_COMPANY_BY_ID = "Getting company by id: ";
-	public static final String GETTING_ALL_COMPANIES = "Getting all company by id: ";
+	public static final String GETTING_COMPANY_BY_ID = "Getting company by id: {0}";
+	public static final String GETTING_ALL_COMPANIES = "Getting all company by id: {0}";
 
 	Logger logger = LoggerFactory.getLogger(CompanyResource.class);
 
@@ -50,6 +51,8 @@ public class CompanyResource {
 	@PostMapping(value = "/")
 	public ResponseEntity<Company> create(@Valid @RequestBody(required = true) CompanyDTO companyDto) {
 
+		logger.info(CREATING_NEW_COMPANY, companyDto.getName());
+
 		Company company = service.fromDTO(companyDto);
 		Company newCompany = service.create(company);
 
@@ -60,7 +63,7 @@ public class CompanyResource {
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Company> getCompanyById(@PathVariable Integer id) {
+	public ResponseEntity<Company> findCompanyById(@PathVariable Integer id) {
 
 		logger.info(GETTING_COMPANY_BY_ID, id);
 
@@ -72,7 +75,7 @@ public class CompanyResource {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Company> update(@Valid @RequestBody CompanyDTO companyDto, @PathVariable Integer id) {
 
-		logger.info(UPDATING_COMPANY, companyDto);
+		logger.info(UPDATING_COMPANY, id);
 
 		companyDto.setId(id);
 		Company company = service.fromDTO(companyDto);
