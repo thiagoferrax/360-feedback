@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +48,7 @@ public class CompanyResource {
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity<Company> create(@Valid @RequestBody CompanyDTO companyDto) {
+	public ResponseEntity<Company> create(@Valid @RequestBody(required = true) CompanyDTO companyDto) {
 
 		Company company = service.fromDTO(companyDto);
 		Company newCompany = service.create(company);
