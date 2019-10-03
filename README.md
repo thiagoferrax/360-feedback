@@ -1,5 +1,9 @@
 # 360-feedback
 
+[![Build Status](https://travis-ci.org/thiagoferrax/360-feedback.svg?branch=master)](https://travis-ci.org/thiagoferrax/360-feedback)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.agile%3Aback-end&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.agile%3Aback-end)
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+
 ## Requirements overview
 
 A project team wants 360 feedback. Team members belong to the project, but one member can belong to more than one project. The project is executed in a department of one of the company's units. All members need to use this system to give feedback to their teams and view the result of the feedback they have received.
