@@ -25,3 +25,16 @@ Finally, the system must control user access and authorization.
 #### Object diagram
 
 ![class-diagram](https://github.com/thiagoferrax/360-feedback/blob/master/requirements/objectDiagram.png)
+
+#### Tech stack
+* [React](https://reactjs.org/) for creating the front-end application
+* [UICore Template](https://coreui.io/) for using a free bootstrap admin template
+* [Spring Boot](http://spring.io/projects/spring-boot) for creating the RESTful Web Services
+* [MockMVC](https://spring.io/guides/gs/testing-web/) for testing the Web Layer
+* [Mockito](https://site.mockito.org/) for testing the Services Layer
+* [Postgres](https://www.postgresql.org/) as database
+* [Maven](https://maven.apache.org/) for managing the project's build
+
+## License
+
+MIT © [thiagoferrax](https://github.com/thiagoferrax).
