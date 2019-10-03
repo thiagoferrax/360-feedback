@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +65,6 @@ public class CompanyResourceTest {
 		this.mockMvc.perform(get("/companies/" + notExistingId)).andExpect(status().isNotFound());
 	}
 	
-	@Ignore
 	@Test
 	public void whenSavingANewCompanyReturnNewId() throws Exception {
 		// Given

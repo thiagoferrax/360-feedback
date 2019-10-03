@@ -49,7 +49,7 @@ public class CompanyResource {
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity<Company> create(@Valid @RequestBody(required = true) CompanyDTO companyDto) {
+	public ResponseEntity<Company> create(@Valid @RequestBody CompanyDTO companyDto) {
 
 		logger.info(CREATING_NEW_COMPANY, companyDto.getName());
 
