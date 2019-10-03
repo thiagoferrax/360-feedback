@@ -34,6 +34,17 @@ Finally, the system must control user access and authorization.
 * [Mockito](https://site.mockito.org/) for testing the Services Layer
 * [Postgres](https://www.postgresql.org/) as database
 * [Maven](https://maven.apache.org/) for managing the project's build
+* [Docker](https://www.docker.com/) for building and managing the application distribution using containers 
+
+## Install
+#### Download the repository
+```sh
+$ git clone https://github.com/thiagoferrax/360-feedback.git
+```
+#### With docker and docker-compose installed
+```sh
+$ cd 360-feedback && docker-compose up
+```
 
 ## License
 

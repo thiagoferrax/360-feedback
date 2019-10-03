@@ -1,0 +1,38 @@
+version: '3'
+volumes:
+   data:
+   m2:
+   node_modules:
+services:
+   database:
+      image: postgres:11.3
+      environment:
+         - POSTGRES_DB=feedback
+         - POSTGRES_USER=postgres
+         - POSTGRES_PASSWORD=postgres
+      volumes:
+         - data:/var/lib/postgresql/data
+   back-end:
+      image: zenika/alpine-maven:3
+      restart: always
+      volumes:
+         - .:/app
+         - m2:/root/.m2
+      working_dir: /app/back-end
+      command: mvn clean spring-boot:run    
+      ports:
+         - 9090:9090
+      depends_on:
+         - database
+   front-end:
+      image: mhart/alpine-node:12
+      restart: always
+      volumes:
+      - .:/app
+      - node_modules:/app/front-end/node_modules
+      working_dir: /app/front-end
+      command: npm i && npm start    
+      ports:
+         - 80:8080
+      depends_on:
+         - back-end
