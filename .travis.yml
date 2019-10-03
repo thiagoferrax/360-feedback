@@ -14,7 +14,7 @@ jdk:
 
 script:
   # JaCoCo is used to have code coverage, "-Pcoverage" activates the maven profile in the pom.xml
-  - cd back-end && mvn clean test sonar:sonar -Dsonar.login=ae17657246ab5c4de9243d101754b92bb44760fc 
+  - cd ./back-end && mvn clean test sonar:sonar -Dsonar.login=ae17657246ab5c4de9243d101754b92bb44760fc 
 
 cache:
   directories:
