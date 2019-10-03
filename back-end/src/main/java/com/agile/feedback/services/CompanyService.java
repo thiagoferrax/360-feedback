@@ -69,6 +69,6 @@ public class CompanyService {
 	}
 
 	public Company fromDTO(@Valid CompanyDTO companyDto) {
-		return new Company(companyDto.getId(), companyDto.getName(), CompanyType.findById(companyDto.getType()), companyDto.getHeadOffice());
+		return new Company(companyDto.getId(), companyDto.getName(), CompanyType.findByCodigo(companyDto.getType()), companyDto.getHeadOffice());
 	}
 }

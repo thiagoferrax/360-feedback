@@ -5,13 +5,13 @@ import java.io.Serializable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.agile.feedback.enums.CompanyType;
 import com.agile.feedback.models.Company;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CompanyDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	private Integer id;
 
 	@NotNull
@@ -21,6 +21,7 @@ public class CompanyDTO implements Serializable {
 	@NotNull
 	private Integer type;
 
+	@JsonIgnore
 	private Company headOffice;
 
 	public Integer getId() {

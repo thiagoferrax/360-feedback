@@ -50,7 +50,7 @@ public class Company implements Serializable {
 		super();
 		this.id = id;
 		this.name = name;
-		this.type = companyType.getId();
+		this.type = companyType.getCodigo();
 		this.headOffice = headOffice;
 	}
 
@@ -71,11 +71,11 @@ public class Company implements Serializable {
 	}
 
 	public CompanyType getType() {
-		return CompanyType.findById(this.type);
+		return CompanyType.findByCodigo(this.type);
 	}
 
 	public void setType(CompanyType type) {
-		this.type = type.getId();
+		this.type = type.getCodigo();
 	}
 
 	public Date getCreatedAt() {
