@@ -27,6 +27,14 @@ public class ResourceExceptionHandler {
 				System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
+	
+	@ExceptionHandler(TeamMemberNotFoundException.class)
+	public ResponseEntity<StandardError> TeamMemberNotFound(TeamMemberNotFoundException e,
+			HttpServletRequest httpServletRequest) {
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
+				System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e,

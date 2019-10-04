@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,13 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.agile.feedback.enums.TeamMemberType;
+
 @Entity
-public class Project implements Serializable {
+public class TeamMember implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,13 +29,15 @@ public class Project implements Serializable {
 
 	private String name;
 
-	@ManyToMany
-	@JoinTable(name = "Project_Company", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "company_id") })
-	private Collection<Company> executingCompanies = new ArrayList<Company>();
+	private Integer type;
+	
+	@Column(unique = true)
+	private String email;
 
-	@OneToMany(mappedBy = "projects")
-	private Collection<TeamMember> members = new ArrayList<TeamMember>();
+	@ManyToMany
+	@JoinTable(name = "TeamMember_Project", joinColumns = {
+			@JoinColumn(name = "team_member_id") }, inverseJoinColumns = { @JoinColumn(name = "project_id") })
+	private Collection<Project> projects = new ArrayList<Project>();
 
 	@CreationTimestamp
 	private Date createdAt;
@@ -41,13 +45,15 @@ public class Project implements Serializable {
 	@UpdateTimestamp
 	private Date updatedAt;
 
-	public Project() {
+	public TeamMember() {
 	}
 
-	public Project(Integer id, String name) {
+	public TeamMember(Integer id, String name, TeamMemberType type, String email) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.type = type.getCodigo();
+		this.email = email;
 	}
 
 	public Integer getId() {
@@ -82,20 +88,28 @@ public class Project implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Collection<Company> getExecutingCompanies() {
-		return executingCompanies;
+	public TeamMemberType getType() {
+		return TeamMemberType.findByCodigo(type);
 	}
 
-	public void setExecutingCompanies(Collection<Company> executingCompanies) {
-		this.executingCompanies = executingCompanies;
+	public void setType(TeamMemberType type) {
+		this.type = type.getCodigo();
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 
-	public Collection<TeamMember> getMembers() {
-		return members;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setMembers(Collection<TeamMember> members) {
-		this.members = members;
+	public Collection<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Collection<Project> projects) {
+		this.projects = projects;
 	}
 
 	@Override
@@ -114,7 +128,7 @@ public class Project implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Project other = (Project) obj;
+		TeamMember other = (TeamMember) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

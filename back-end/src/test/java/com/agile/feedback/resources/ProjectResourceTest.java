@@ -24,8 +24,10 @@ import com.agile.feedback.exceptions.ProjectNotFoundException;
 import com.agile.feedback.models.Project;
 import com.agile.feedback.repositories.CompanyRepository;
 import com.agile.feedback.repositories.ProjectRepository;
+import com.agile.feedback.repositories.TeamMemberRepository;
 import com.agile.feedback.services.CompanyService;
 import com.agile.feedback.services.ProjectService;
+import com.agile.feedback.services.TeamMemberService;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
@@ -38,13 +40,19 @@ public class ProjectResourceTest {
 	private CompanyService companyService;
 
 	@MockBean
-	private CompanyRepository companyRepository;
+	private ProjectService projectService;
 	
 	@MockBean
-	private ProjectService projectService;
+	private TeamMemberService teamMemberService;
+	
+	@MockBean
+	private CompanyRepository companyRepository;
 
 	@MockBean
 	private ProjectRepository projectRepository;
+	
+	@MockBean
+	private TeamMemberRepository teamMemberRepository;
 	
 	@Test
 	public void whenProjectIdExistsReturnsExistingProject() throws Exception {
