@@ -41,6 +41,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "docker_start": "npm install && npm rebuild node-sass &&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
