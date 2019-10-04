@@ -9,18 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.agile.feedback.enums.CompanyType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-public class Company implements Serializable {
+public class Project implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,34 +26,24 @@ public class Company implements Serializable {
 
 	private String name;
 
-	private Integer type;
+	@ManyToMany
+	@JoinTable(name = "Project_Company", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "company_id") })
+	private Collection<Company> executingCompanies = new ArrayList<Company>();
 
-	@JsonIgnore
-	@ManyToOne
-	private Company headOffice;
-
-	@OneToMany(mappedBy = "headOffice")
-	private Collection<Company> branches = new ArrayList<Company>();
-	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "executingCompanies")
-	private Collection<Project> projects = new ArrayList<Project>();
-	
 	@CreationTimestamp
 	private Date createdAt;
 
 	@UpdateTimestamp
 	private Date updatedAt;
 
-	public Company() {
+	public Project() {
 	}
 
-	public Company(Integer id, String name, CompanyType companyType, Company headOffice) {
+	public Project(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.type = companyType.getCodigo();
-		this.headOffice = headOffice;
 	}
 
 	public Integer getId() {
@@ -75,14 +62,6 @@ public class Company implements Serializable {
 		this.name = name;
 	}
 
-	public CompanyType getType() {
-		return CompanyType.findByCodigo(this.type);
-	}
-
-	public void setType(CompanyType type) {
-		this.type = type.getCodigo();
-	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -97,26 +76,6 @@ public class Company implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	public Company getHeadOffice() {
-		return headOffice;
-	}
-
-	public void setHeadOffice(Company headOffice) {
-		this.headOffice = headOffice;
-	}
-
-	public Collection<Company> getBranches() {
-		return branches;
-	}
-
-	public void setBranches(Collection<Company> branches) {
-		this.branches = branches;
-	}
-
-	public void setType(Integer type) {
-		this.type = type;
 	}
 
 	@Override
@@ -135,7 +94,7 @@ public class Company implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Company other = (Company) obj;
+		Project other = (Project) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -144,12 +103,12 @@ public class Company implements Serializable {
 		return true;
 	}
 
-	public Collection<Project> getProjects() {
-		return projects;
+	public Collection<Company> getExecutingCompanies() {
+		return executingCompanies;
 	}
 
-	public void setProjects(Collection<Project> projects) {
-		this.projects = projects;
+	public void setExecutingCompanies(Collection<Company> executingCompanies) {
+		this.executingCompanies = executingCompanies;
 	}
 
 }
