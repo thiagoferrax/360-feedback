@@ -24,7 +24,9 @@ import com.agile.feedback.enums.CompanyType;
 import com.agile.feedback.exceptions.CompanyNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
+import com.agile.feedback.repositories.ProjectRepository;
 import com.agile.feedback.services.CompanyService;
+import com.agile.feedback.services.ProjectService;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
@@ -38,7 +40,13 @@ public class CompanyResourceTest {
 
 	@MockBean
 	private CompanyRepository companyRepository;
+	
+	@MockBean
+	private ProjectService projectService;
 
+	@MockBean
+	private ProjectRepository projectRepository;
+	
 	@Test
 	public void whenCompanyIdExistsReturnsExistingCompany() throws Exception {
 		// Given

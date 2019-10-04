@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.agile.feedback.exceptions.CompanyNotFoundException;
 import com.agile.feedback.models.Company;
@@ -21,6 +22,12 @@ public class CompanyServiceTest {
 
 	@Mock
 	private CompanyRepository repository;
+	
+	@MockBean
+	private CompanyRepository companyRepository;
+	
+	@MockBean
+	private ProjectService projectService;
 
 	@Before
 	public void init() {
