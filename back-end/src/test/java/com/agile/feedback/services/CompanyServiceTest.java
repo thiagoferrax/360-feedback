@@ -9,26 +9,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.agile.feedback.exceptions.CompanyNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
+import com.agile.feedback.repositories.ProjectRepository;
 
 public class CompanyServiceTest {
 
 	@InjectMocks
-	private CompanyService service;
+	private CompanyService companyService;
 
 	@Mock
-	private CompanyRepository repository;
+	private ProjectService projectService;
 	
-	@MockBean
+	@Mock
 	private CompanyRepository companyRepository;
 	
-	@MockBean
-	private ProjectService projectService;
-
+	@Mock
+	private ProjectRepository projectRepository;
+	
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
@@ -43,10 +43,10 @@ public class CompanyServiceTest {
 		existingCompany.setId(existingId);
 
 		Optional<Company> optional = Optional.of(existingCompany);
-		Mockito.when(repository.findById(existingId)).thenReturn(optional);
+		Mockito.when(companyRepository.findById(existingId)).thenReturn(optional);
 
 		// When
-		Company company = service.find(existingId);
+		Company company = companyService.find(existingId);
 
 		// Then
 		Assert.assertEquals(existingCompany, company);
@@ -57,32 +57,32 @@ public class CompanyServiceTest {
 		// Given
 		Integer notExistingId = 2;
 
-		Mockito.when(repository.findById(notExistingId))
+		Mockito.when(companyRepository.findById(notExistingId))
 				.thenThrow(new CompanyNotFoundException(CompanyService.COMPANY_NOT_FOUND_FOR_ID + notExistingId));
 
 		// When
-		service.find(notExistingId);
+		companyService.find(notExistingId);
 	}
 
 	@Test
-	public void whenUpdatinAnCompanyVerifyThatRepositorySaveIsCalled() {
+	public void whenUpdatinACompanyVerifyThatRepositorySaveIsCalled() {
 		// Given
 		Integer existingId = 1;
 		Company existingCompany = new Company();
 		existingCompany.setId(existingId);
 
 		Optional<Company> optional = Optional.of(existingCompany);
-		Mockito.when(repository.findById(existingId)).thenReturn(optional);
+		Mockito.when(companyRepository.findById(existingId)).thenReturn(optional);
 
 		// When
-		service.update(existingCompany);
+		companyService.update(existingCompany);
 
 		// Then
-		Mockito.verify(repository).save(existingCompany);
+		Mockito.verify(companyRepository).save(existingCompany);
 	}
 
 	@Test
-	public void whenDeletingAnCompanyVerifyThatRepositoryDeleteByIdIsCalled() {
+	public void whenDeletingACompanyVerifyThatRepositoryDeleteByIdIsCalled() {
 		// Given
 		Integer existingId = 1;
 
@@ -90,13 +90,13 @@ public class CompanyServiceTest {
 		existingCompany.setId(existingId);
 
 		Optional<Company> optional = Optional.of(existingCompany);
-		Mockito.when(repository.findById(existingId)).thenReturn(optional);
+		Mockito.when(companyRepository.findById(existingId)).thenReturn(optional);
 
 		// When
-		service.remove(existingId);
+		companyService.remove(existingId);
 
 		// Then
-		Mockito.verify(repository).deleteById(existingId);
+		Mockito.verify(companyRepository).deleteById(existingId);
 	}
 
 }

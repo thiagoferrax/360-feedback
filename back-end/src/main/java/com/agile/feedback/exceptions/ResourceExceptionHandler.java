@@ -13,22 +13,32 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ResourceExceptionHandler {
 
 	@ExceptionHandler(CompanyNotFoundException.class)
-	public ResponseEntity<StandardError> CompanyNotFound(CompanyNotFoundException e, HttpServletRequest httpServletRequest) {
+	public ResponseEntity<StandardError> CompanyNotFound(CompanyNotFoundException e,
+			HttpServletRequest httpServletRequest) {
 		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
 				System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
-	
+
+	@ExceptionHandler(ProjectNotFoundException.class)
+	public ResponseEntity<StandardError> ProjectNotFound(ProjectNotFoundException e,
+			HttpServletRequest httpServletRequest) {
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
+				System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest httpServletRequest) {
+	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e,
+			HttpServletRequest httpServletRequest) {
 		ValidationError validation = new ValidationError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
 				System.currentTimeMillis());
-		
+
 		for (FieldError error : e.getBindingResult().getFieldErrors()) {
 			validation.addError(error.getField(), error.getDefaultMessage());
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validation);
-	}	
+	}
 
 }
