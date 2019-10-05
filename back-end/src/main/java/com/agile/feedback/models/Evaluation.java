@@ -57,14 +57,6 @@ public class Evaluation implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
