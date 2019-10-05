@@ -1,42 +1,35 @@
 package com.agile.feedback.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class Project implements Serializable {
+public class Evaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	private String name;
+	private Double grade;
 
-	@ManyToMany
-	@JoinTable(name = "Project_Company", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "company_id") })
-	private Collection<Company> executingCompanies = new ArrayList<Company>();
+	@ManyToOne
+	private FeedbackItem feedbackItem;
 
-	@ManyToMany(mappedBy = "projects")
-	private Collection<TeamMember> members = new ArrayList<TeamMember>();
+	@ManyToOne
+	private TeamMember evaluator;
 
-	@OneToMany(mappedBy = "project")
-	private Collection<FeedbackForm> feedbackForms = new ArrayList<FeedbackForm>();
+	@ManyToOne
+	private TeamMember memberEvaluated;
 
 	@CreationTimestamp
 	private Date createdAt;
@@ -44,13 +37,16 @@ public class Project implements Serializable {
 	@UpdateTimestamp
 	private Date updatedAt;
 
-	public Project() {
+	public Evaluation() {
 	}
 
-	public Project(Integer id, String name) {
+	public Evaluation(Integer id, Double grade, FeedbackItem feedbackItem, TeamMember evaluator, TeamMember memberEvaluated) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.grade = grade;
+		this.feedbackItem = feedbackItem;
+		this.evaluator = evaluator;
+		this.memberEvaluated = memberEvaluated;
 	}
 
 	public Integer getId() {
@@ -85,28 +81,36 @@ public class Project implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Collection<Company> getExecutingCompanies() {
-		return executingCompanies;
+	public Double getGrade() {
+		return grade;
 	}
 
-	public void setExecutingCompanies(Collection<Company> executingCompanies) {
-		this.executingCompanies = executingCompanies;
+	public void setGrade(Double grade) {
+		this.grade = grade;
 	}
 
-	public Collection<TeamMember> getMembers() {
-		return members;
+	public FeedbackItem getFeedbackItem() {
+		return feedbackItem;
 	}
 
-	public void setMembers(Collection<TeamMember> members) {
-		this.members = members;
+	public void setFeedbackItem(FeedbackItem feedbackItem) {
+		this.feedbackItem = feedbackItem;
 	}
 
-	public Collection<FeedbackForm> getFeedbackForms() {
-		return feedbackForms;
+	public TeamMember getEvaluator() {
+		return evaluator;
 	}
 
-	public void setFeedbackForms(Collection<FeedbackForm> feedbackForms) {
-		this.feedbackForms = feedbackForms;
+	public void setEvaluator(TeamMember evaluator) {
+		this.evaluator = evaluator;
+	}
+
+	public TeamMember getMemberEvaluated() {
+		return memberEvaluated;
+	}
+
+	public void setMemberEvaluated(TeamMember memberEvaluated) {
+		this.memberEvaluated = memberEvaluated;
 	}
 
 	@Override
@@ -125,7 +129,7 @@ public class Project implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Project other = (Project) obj;
+		Evaluation other = (Evaluation) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,7 +31,7 @@ public class TeamMember implements Serializable {
 	private String name;
 
 	private Integer type;
-	
+
 	@Column(unique = true)
 	private String email;
 
@@ -38,6 +39,12 @@ public class TeamMember implements Serializable {
 	@JoinTable(name = "TeamMember_Project", joinColumns = {
 			@JoinColumn(name = "team_member_id") }, inverseJoinColumns = { @JoinColumn(name = "project_id") })
 	private Collection<Project> projects = new ArrayList<Project>();
+
+	@OneToMany(mappedBy = "evaluator")
+	private Collection<Evaluation> memberEvaluations = new ArrayList<Evaluation>();
+
+	@OneToMany(mappedBy = "memberEvaluated")
+	private Collection<Evaluation> evaluationsAboutMe = new ArrayList<Evaluation>();
 
 	@CreationTimestamp
 	private Date createdAt;
@@ -95,7 +102,7 @@ public class TeamMember implements Serializable {
 	public void setType(TeamMemberType type) {
 		this.type = type.getCodigo();
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -110,6 +117,22 @@ public class TeamMember implements Serializable {
 
 	public void setProjects(Collection<Project> projects) {
 		this.projects = projects;
+	}
+
+	public Collection<Evaluation> getMemberEvaluations() {
+		return memberEvaluations;
+	}
+
+	public void setMemberEvaluations(Collection<Evaluation> memberEvaluations) {
+		this.memberEvaluations = memberEvaluations;
+	}
+
+	public Collection<Evaluation> getEvaluationsAboutMe() {
+		return evaluationsAboutMe;
+	}
+
+	public void setEvaluationsAboutMe(Collection<Evaluation> evaluationsAboutMe) {
+		this.evaluationsAboutMe = evaluationsAboutMe;
 	}
 
 	@Override

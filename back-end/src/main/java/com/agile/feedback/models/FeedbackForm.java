@@ -9,16 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class Project implements Serializable {
+public class FeedbackForm implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,16 +25,13 @@ public class Project implements Serializable {
 
 	private String name;
 
-	@ManyToMany
-	@JoinTable(name = "Project_Company", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "company_id") })
-	private Collection<Company> executingCompanies = new ArrayList<Company>();
+	private String description;
 
-	@ManyToMany(mappedBy = "projects")
-	private Collection<TeamMember> members = new ArrayList<TeamMember>();
+	@ManyToOne
+	private Project project;
 
-	@OneToMany(mappedBy = "project")
-	private Collection<FeedbackForm> feedbackForms = new ArrayList<FeedbackForm>();
+	@OneToMany(mappedBy = "form")
+	private Collection<FeedbackItem> items = new ArrayList<FeedbackItem>();
 
 	@CreationTimestamp
 	private Date createdAt;
@@ -44,13 +39,15 @@ public class Project implements Serializable {
 	@UpdateTimestamp
 	private Date updatedAt;
 
-	public Project() {
+	public FeedbackForm() {
 	}
 
-	public Project(Integer id, String name) {
+	public FeedbackForm(Integer id, String name, String description, Project project) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
+		this.project = project;
 	}
 
 	public Integer getId() {
@@ -85,28 +82,12 @@ public class Project implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Collection<Company> getExecutingCompanies() {
-		return executingCompanies;
+	public Project getProject() {
+		return project;
 	}
 
-	public void setExecutingCompanies(Collection<Company> executingCompanies) {
-		this.executingCompanies = executingCompanies;
-	}
-
-	public Collection<TeamMember> getMembers() {
-		return members;
-	}
-
-	public void setMembers(Collection<TeamMember> members) {
-		this.members = members;
-	}
-
-	public Collection<FeedbackForm> getFeedbackForms() {
-		return feedbackForms;
-	}
-
-	public void setFeedbackForms(Collection<FeedbackForm> feedbackForms) {
-		this.feedbackForms = feedbackForms;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	@Override
@@ -125,13 +106,29 @@ public class Project implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Project other = (Project) obj;
+		FeedbackForm other = (FeedbackForm) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Collection<FeedbackItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Collection<FeedbackItem> items) {
+		this.items = items;
 	}
 
 }

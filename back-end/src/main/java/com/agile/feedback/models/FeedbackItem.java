@@ -9,16 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class Project implements Serializable {
+public class FeedbackItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,30 +25,38 @@ public class Project implements Serializable {
 
 	private String name;
 
-	@ManyToMany
-	@JoinTable(name = "Project_Company", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "company_id") })
-	private Collection<Company> executingCompanies = new ArrayList<Company>();
+	private String description;
 
-	@ManyToMany(mappedBy = "projects")
-	private Collection<TeamMember> members = new ArrayList<TeamMember>();
+	private Boolean ative;
 
-	@OneToMany(mappedBy = "project")
-	private Collection<FeedbackForm> feedbackForms = new ArrayList<FeedbackForm>();
+	@ManyToOne
+	private FeedbackForm form;
+	
+	@ManyToOne
+	private FeedbackItem parent;
 
+	@OneToMany(mappedBy = "parent")
+	private Collection<FeedbackItem> children = new ArrayList<FeedbackItem>();
+	
+	@OneToMany(mappedBy = "feedbackItem")
+	private Collection<Evaluation> itemEvaluations = new ArrayList<Evaluation>();  
+	
 	@CreationTimestamp
 	private Date createdAt;
 
 	@UpdateTimestamp
 	private Date updatedAt;
 
-	public Project() {
+	public FeedbackItem() {
 	}
 
-	public Project(Integer id, String name) {
+	public FeedbackItem(Integer id, String name, String description, Boolean ative, FeedbackForm form) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
+		this.ative = ative;
+		this.form = form;
 	}
 
 	public Integer getId() {
@@ -85,28 +91,52 @@ public class Project implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Collection<Company> getExecutingCompanies() {
-		return executingCompanies;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setExecutingCompanies(Collection<Company> executingCompanies) {
-		this.executingCompanies = executingCompanies;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Collection<TeamMember> getMembers() {
-		return members;
+	public Boolean getAtive() {
+		return ative;
 	}
 
-	public void setMembers(Collection<TeamMember> members) {
-		this.members = members;
+	public void setAtive(Boolean ative) {
+		this.ative = ative;
 	}
 
-	public Collection<FeedbackForm> getFeedbackForms() {
-		return feedbackForms;
+	public FeedbackForm getForm() {
+		return form;
 	}
 
-	public void setFeedbackForms(Collection<FeedbackForm> feedbackForms) {
-		this.feedbackForms = feedbackForms;
+	public void setForm(FeedbackForm form) {
+		this.form = form;
+	}
+	
+	public FeedbackItem getParent() {
+		return parent;
+	}
+
+	public void setParent(FeedbackItem parent) {
+		this.parent = parent;
+	}
+
+	public Collection<FeedbackItem> getChildren() {
+		return children;
+	}
+
+	public void setChildren(Collection<FeedbackItem> children) {
+		this.children = children;
+	}
+
+	public Collection<Evaluation> getItemEvaluations() {
+		return itemEvaluations;
+	}
+
+	public void setItemEvaluations(Collection<Evaluation> itemEvaluations) {
+		this.itemEvaluations = itemEvaluations;
 	}
 
 	@Override
@@ -125,7 +155,7 @@ public class Project implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Project other = (Project) obj;
+		FeedbackItem other = (FeedbackItem) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

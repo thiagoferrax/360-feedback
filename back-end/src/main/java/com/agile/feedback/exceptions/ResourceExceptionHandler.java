@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ResourceExceptionHandler {
 
 	@ExceptionHandler(CompanyNotFoundException.class)
-	public ResponseEntity<StandardError> CompanyNotFound(CompanyNotFoundException e,
+	public ResponseEntity<StandardError> companyNotFound(CompanyNotFoundException e,
 			HttpServletRequest httpServletRequest) {
 		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
 				System.currentTimeMillis());
@@ -21,15 +21,39 @@ public class ResourceExceptionHandler {
 	}
 
 	@ExceptionHandler(ProjectNotFoundException.class)
-	public ResponseEntity<StandardError> ProjectNotFound(ProjectNotFoundException e,
+	public ResponseEntity<StandardError> projectNotFound(ProjectNotFoundException e,
 			HttpServletRequest httpServletRequest) {
 		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
 				System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
-	
+
 	@ExceptionHandler(TeamMemberNotFoundException.class)
-	public ResponseEntity<StandardError> TeamMemberNotFound(TeamMemberNotFoundException e,
+	public ResponseEntity<StandardError> teamMemberNotFound(TeamMemberNotFoundException e,
+			HttpServletRequest httpServletRequest) {
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
+				System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(FeedbackFormNotFoundException.class)
+	public ResponseEntity<StandardError> feedbackFormNotFound(FeedbackFormNotFoundException e,
+			HttpServletRequest httpServletRequest) {
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
+				System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(FeedbackItemNotFoundException.class)
+	public ResponseEntity<StandardError> feedbackItemNotFound(FeedbackItemNotFoundException e,
+			HttpServletRequest httpServletRequest) {
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
+				System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(EvaluationNotFoundException.class)
+	public ResponseEntity<StandardError> evaluationNotFound(EvaluationNotFoundException e,
 			HttpServletRequest httpServletRequest) {
 		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
 				System.currentTimeMillis());
