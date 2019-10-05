@@ -19,14 +19,14 @@ import com.agile.feedback.repositories.TeamMemberRepository;
 @SpringBootApplication
 public class FeedbackApplication implements CommandLineRunner {
 
-	@Autowired
-	private CompanyRepository companyRepository;
-
-	@Autowired
-	private ProjectRepository projectRepository;
-
-	@Autowired
-	private TeamMemberRepository teamMemberRepository;
+//	@Autowired
+//	private CompanyRepository companyRepository;
+//
+//	@Autowired
+//	private ProjectRepository projectRepository;
+//
+//	@Autowired
+//	private TeamMemberRepository teamMemberRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FeedbackApplication.class, args);
@@ -59,10 +59,9 @@ public class FeedbackApplication implements CommandLineRunner {
 		edoc.getMembers().addAll(Arrays.asList(eloy, pedro));
 		lifeProof.getMembers().addAll(Arrays.asList(thiago, pedro));
 
-		companyRepository.saveAll(Arrays.asList(dataprev, udce));
-		projectRepository.saveAll(Arrays.asList(edoc, lifeProof));
-		teamMemberRepository.saveAll(Arrays.asList(eloy, thiago, pedro));
-
+//		companyRepository.saveAll(Arrays.asList(dataprev, udce));
+//		projectRepository.saveAll(Arrays.asList(edoc, lifeProof));
+//		teamMemberRepository.saveAll(Arrays.asList(eloy, thiago, pedro));
 	}
 
 }
