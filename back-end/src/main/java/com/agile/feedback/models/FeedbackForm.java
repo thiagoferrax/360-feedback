@@ -31,7 +31,7 @@ public class FeedbackForm implements Serializable {
 	private Project project;
 
 	@OneToMany(mappedBy = "form")
-	private Collection<FeedbackItem> items = new ArrayList<FeedbackItem>();
+	private Collection<FeedbackItem> items = new ArrayList<>();
 
 	@ManyToOne
 	private TeamMember author;

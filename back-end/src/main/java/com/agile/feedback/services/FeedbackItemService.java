@@ -42,11 +42,11 @@ public class FeedbackItemService {
 		return repository.findAll();
 	}
 
-	public FeedbackItem find(Integer FeedbackItemId) {
+	public FeedbackItem find(Integer feedbackItemId) {
 
 		logger.info(FINDING_FEEDBACK_ITEM);
 
-		Optional<FeedbackItem> optional = repository.findById(FeedbackItemId);
+		Optional<FeedbackItem> optional = repository.findById(feedbackItemId);
 		return optional.orElseThrow(() -> new FeedbackItemNotFoundException(FEEDBACK_ITEM_NOT_FOUND));
 	}
 
@@ -67,8 +67,8 @@ public class FeedbackItemService {
 		repository.deleteById(id);
 	}
 
-	public FeedbackItem fromDTO(@Valid FeedbackItemDTO FeedbackItemDto) {
-		return new FeedbackItem(FeedbackItemDto.getId(), FeedbackItemDto.getName(), FeedbackItemDto.getDescription(),
-				FeedbackItemDto.getAtive(), FeedbackItemDto.getForm());
+	public FeedbackItem fromDTO(@Valid FeedbackItemDTO feedbackItemDto) {
+		return new FeedbackItem(feedbackItemDto.getId(), feedbackItemDto.getName(), feedbackItemDto.getDescription(),
+				feedbackItemDto.getAtive(), feedbackItemDto.getForm());
 	}
 }

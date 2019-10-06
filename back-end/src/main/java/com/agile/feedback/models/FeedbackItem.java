@@ -36,10 +36,10 @@ public class FeedbackItem implements Serializable {
 	private FeedbackItem parent;
 
 	@OneToMany(mappedBy = "parent")
-	private Collection<FeedbackItem> children = new ArrayList<FeedbackItem>();
+	private Collection<FeedbackItem> children = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "feedbackItem")
-	private Collection<Evaluation> itemEvaluations = new ArrayList<Evaluation>();  
+	private Collection<Evaluation> itemEvaluations = new ArrayList<>();  
 	
 	@CreationTimestamp
 	private Date createdAt;

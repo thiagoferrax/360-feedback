@@ -26,6 +26,12 @@ import com.agile.feedback.models.FeedbackForm;
 import com.agile.feedback.models.FeedbackItem;
 import com.agile.feedback.models.Project;
 import com.agile.feedback.models.TeamMember;
+import com.agile.feedback.repositories.CompanyRepository;
+import com.agile.feedback.repositories.EvaluationRepository;
+import com.agile.feedback.repositories.FeedbackFormRepository;
+import com.agile.feedback.repositories.FeedbackItemRepository;
+import com.agile.feedback.repositories.ProjectRepository;
+import com.agile.feedback.repositories.TeamMemberRepository;
 import com.agile.feedback.services.CompanyService;
 import com.agile.feedback.services.EvaluationService;
 import com.agile.feedback.services.FeedbackFormService;
@@ -57,6 +63,24 @@ public class FeedbackItemResourceTest {
 
 	@MockBean
 	private FeedbackItemService feedbackItemService;
+	
+	@MockBean
+	private CompanyRepository companyRepository;
+
+	@MockBean
+	private ProjectRepository projectRepository;
+
+	@MockBean
+	private TeamMemberRepository teamMemberRepository;
+
+	@MockBean
+	private FeedbackFormRepository feedbackFormRepository;
+
+	@MockBean
+	private FeedbackItemRepository feedbackItemRepository;
+
+	@MockBean
+	private EvaluationRepository evaluationRepository;
 
 	@Test
 	public void whenFeedbackItemIdExistsReturnsExistingFeedbackItem() throws Exception {

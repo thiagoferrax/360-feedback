@@ -38,16 +38,16 @@ public class TeamMember implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "TeamMember_Project", joinColumns = {
 			@JoinColumn(name = "team_member_id") }, inverseJoinColumns = { @JoinColumn(name = "project_id") })
-	private Collection<Project> projects = new ArrayList<Project>();
+	private Collection<Project> projects = new ArrayList<>();
 
 	@OneToMany(mappedBy = "evaluator")
-	private Collection<Evaluation> memberEvaluations = new ArrayList<Evaluation>();
+	private Collection<Evaluation> memberEvaluations = new ArrayList<>();
 
 	@OneToMany(mappedBy = "memberEvaluated")
-	private Collection<Evaluation> evaluationsAboutMe = new ArrayList<Evaluation>();
-	
+	private Collection<Evaluation> evaluationsAboutMe = new ArrayList<>();
+
 	@OneToMany(mappedBy = "author")
-	private Collection<FeedbackForm> formsCreatedByMe = new ArrayList<FeedbackForm>();
+	private Collection<FeedbackForm> formsCreatedByMe = new ArrayList<>();
 
 	@CreationTimestamp
 	private Date createdAt;
@@ -137,7 +137,7 @@ public class TeamMember implements Serializable {
 	public void setEvaluationsAboutMe(Collection<Evaluation> evaluationsAboutMe) {
 		this.evaluationsAboutMe = evaluationsAboutMe;
 	}
-	
+
 	public Collection<FeedbackForm> getFormsCreatedByMe() {
 		return formsCreatedByMe;
 	}

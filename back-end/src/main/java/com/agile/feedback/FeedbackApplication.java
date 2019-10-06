@@ -1,7 +1,10 @@
 package com.agile.feedback;
 
 import java.util.Arrays;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,18 +17,36 @@ import com.agile.feedback.models.FeedbackForm;
 import com.agile.feedback.models.FeedbackItem;
 import com.agile.feedback.models.Project;
 import com.agile.feedback.models.TeamMember;
+import com.agile.feedback.repositories.CompanyRepository;
+import com.agile.feedback.repositories.EvaluationRepository;
+import com.agile.feedback.repositories.FeedbackFormRepository;
+import com.agile.feedback.repositories.FeedbackItemRepository;
+import com.agile.feedback.repositories.ProjectRepository;
+import com.agile.feedback.repositories.TeamMemberRepository;
 
 @SpringBootApplication
 public class FeedbackApplication implements CommandLineRunner {
 
-//	@Autowired
-//	private CompanyRepository companyRepository;
-//
-//	@Autowired
-//	private ProjectRepository projectRepository;
-//
-//	@Autowired
-//	private TeamMemberRepository teamMemberRepository;
+	@Value("${commandLineRunner.enabled}")
+	private Boolean commandLineRunnerEnable;
+
+	@Autowired
+	private CompanyRepository companyRepository;
+
+	@Autowired
+	private ProjectRepository projectRepository;
+
+	@Autowired
+	private TeamMemberRepository teamMemberRepository;
+
+	@Autowired
+	private FeedbackFormRepository feedbackFormRepository;
+
+	@Autowired
+	private FeedbackItemRepository feedbackItemRepository;
+
+	@Autowired
+	private EvaluationRepository evaluationRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FeedbackApplication.class, args);
@@ -78,9 +99,27 @@ public class FeedbackApplication implements CommandLineRunner {
 		pedro.getEvaluationsAboutMe().addAll(Arrays.asList(technicalPedroSelfEvaluation, englishPedroSelfEvaluation,
 				technicalPedroEvaluatedByThiago, englishPedroEvaluatedByThiago));
 
-//		companyRepository.saveAll(Arrays.asList(dataprev, udce));
-//		projectRepository.saveAll(Arrays.asList(edoc, lifeProof));
-//		teamMemberRepository.saveAll(Arrays.asList(eloy, thiago, pedro));
+		List<Company> companies = Arrays.asList(dataprev, udce);
+		List<Project> projects = Arrays.asList(edoc);
+		List<TeamMember> teamMembers = Arrays.asList(thiago, pedro);
+		List<FeedbackItem> feedbackItems = Arrays.asList(technicalExperience, englishFluence);
+		List<Evaluation> evaluations = Arrays.asList(technicalThiagoSelfEvaluation, englishThiagoSelfEvaluation,
+				technicalPedroEvaluatedByThiago, englishPedroEvaluatedByThiago, technicalThiagoEvaluatedByPedro,
+				englishThiagoEvaluatedByPedro, technicalPedroSelfEvaluation, englishPedroSelfEvaluation);
+
+		if (commandLineRunnerEnable) {
+			save(feedback360, companies, projects, teamMembers, feedbackItems, evaluations);
+		}
+	}
+
+	private void save(FeedbackForm feedback360, List<Company> companies, List<Project> projects,
+			List<TeamMember> teamMembers, List<FeedbackItem> feedbackItems, List<Evaluation> evaluations) {
+		companyRepository.saveAll(companies);
+		projectRepository.saveAll(projects);
+		teamMemberRepository.saveAll(teamMembers);
+		feedbackFormRepository.save(feedback360);
+		feedbackItemRepository.saveAll(feedbackItems);
+		evaluationRepository.saveAll(evaluations);
 	}
 
 }

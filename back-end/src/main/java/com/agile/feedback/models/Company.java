@@ -36,12 +36,12 @@ public class Company implements Serializable {
 	private Company headOffice;
 
 	@OneToMany(mappedBy = "headOffice")
-	private Collection<Company> branches = new ArrayList<Company>();
-	
+	private Collection<Company> branches = new ArrayList<>();
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "executingCompanies")
-	private Collection<Project> projects = new ArrayList<Project>();
-	
+	private Collection<Project> projects = new ArrayList<>();
+
 	@CreationTimestamp
 	private Date createdAt;
 

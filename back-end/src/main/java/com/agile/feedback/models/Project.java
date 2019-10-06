@@ -30,13 +30,13 @@ public class Project implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "Project_Company", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "company_id") })
-	private Collection<Company> executingCompanies = new ArrayList<Company>();
+	private Collection<Company> executingCompanies = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "projects")
-	private Collection<TeamMember> members = new ArrayList<TeamMember>();
+	private Collection<TeamMember> members = new ArrayList<>();
 
 	@OneToMany(mappedBy = "project")
-	private Collection<FeedbackForm> feedbackForms = new ArrayList<FeedbackForm>();
+	private Collection<FeedbackForm> feedbackForms = new ArrayList<>();
 
 	@CreationTimestamp
 	private Date createdAt;

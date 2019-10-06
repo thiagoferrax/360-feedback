@@ -42,21 +42,21 @@ public class EvaluationService {
 		return repository.findAll();
 	}
 
-	public Evaluation find(Integer EvaluationId) {
+	public Evaluation find(Integer evaluationId) {
 
 		logger.info(FINDING_EVALUATION);
 
-		Optional<Evaluation> optional = repository.findById(EvaluationId);
+		Optional<Evaluation> optional = repository.findById(evaluationId);
 		return optional.orElseThrow(() -> new EvaluationNotFoundException(EVALUATION_NOT_FOUND));
 	}
 
-	public Evaluation update(Evaluation Evaluation) {
+	public Evaluation update(Evaluation evaluation) {
 		logger.info(UPDATING_EVALUATION);
 
-		Evaluation foundEvaluation = find(Evaluation.getId());
-		Evaluation.setCreatedAt(foundEvaluation.getCreatedAt());
+		Evaluation foundEvaluation = find(evaluation.getId());
+		evaluation.setCreatedAt(foundEvaluation.getCreatedAt());
 
-		return repository.save(Evaluation);
+		return repository.save(evaluation);
 	}
 
 	public void remove(Integer id) {
@@ -67,8 +67,8 @@ public class EvaluationService {
 		repository.deleteById(id);
 	}
 
-	public Evaluation fromDTO(@Valid EvaluationDTO EvaluationDto) {
-		return new Evaluation(EvaluationDto.getId(), EvaluationDto.getGrade(), EvaluationDto.getFeedbackItem(),
-				EvaluationDto.getEvaluator(), EvaluationDto.getMemberEvaluated());
+	public Evaluation fromDTO(@Valid EvaluationDTO evaluationDto) {
+		return new Evaluation(evaluationDto.getId(), evaluationDto.getGrade(), evaluationDto.getFeedbackItem(),
+				evaluationDto.getEvaluator(), evaluationDto.getMemberEvaluated());
 	}
 }
