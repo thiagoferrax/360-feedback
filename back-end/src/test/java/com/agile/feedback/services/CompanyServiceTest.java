@@ -13,21 +13,14 @@ import org.mockito.MockitoAnnotations;
 import com.agile.feedback.exceptions.CompanyNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
-import com.agile.feedback.repositories.ProjectRepository;
 
 public class CompanyServiceTest {
 
 	@InjectMocks
 	private CompanyService companyService;
-
-	@Mock
-	private ProjectService projectService;
 	
 	@Mock
 	private CompanyRepository companyRepository;
-	
-	@Mock
-	private ProjectRepository projectRepository;
 	
 	@Before
 	public void init() {

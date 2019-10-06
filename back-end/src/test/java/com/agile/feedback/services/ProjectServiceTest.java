@@ -21,12 +21,6 @@ public class ProjectServiceTest {
 	private ProjectService projectService;
 	
 	@Mock
-	private CompanyService companyService;
-	
-	@Mock
-	private CompanyRepository companyRepository;
-	
-	@Mock
 	private ProjectRepository projectRepository;
 	
 	@Before

@@ -12,27 +12,13 @@ import org.mockito.MockitoAnnotations;
 
 import com.agile.feedback.exceptions.TeamMemberNotFoundException;
 import com.agile.feedback.models.TeamMember;
-import com.agile.feedback.repositories.CompanyRepository;
-import com.agile.feedback.repositories.ProjectRepository;
 import com.agile.feedback.repositories.TeamMemberRepository;
 
 public class TeamMemberServiceTest {
 
 	@InjectMocks
 	private TeamMemberService teamMemberService;
-	
-	@Mock
-	private ProjectService projectService;
-	
-	@Mock
-	private CompanyService companyService;
-	
-	@Mock
-	private CompanyRepository companyRepository;
-	
-	@Mock
-	private ProjectRepository projectRepository;
-	
+			
 	@Mock
 	private TeamMemberRepository teamMemberRepository;
 	
