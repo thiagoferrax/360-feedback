@@ -30,6 +30,13 @@ public class FeedbackItemService {
 	@Autowired
 	private FeedbackItemRepository repository;
 
+	public FeedbackItem create(FeedbackItem feedbackItem) {
+		logger.info(CREATING_A_FEEDBACK_ITEM, feedbackItem);
+
+		feedbackItem.setId(null);
+		return repository.save(feedbackItem);
+	}
+	
 	public List<FeedbackItem> findAll() {
 		logger.info(FINDING_ALL_FEEDBACK_ITEMS);
 		return repository.findAll();

@@ -23,10 +23,10 @@ import com.agile.feedback.dtos.TeamMemberDTO;
 import com.agile.feedback.enums.TeamMemberType;
 import com.agile.feedback.exceptions.TeamMemberNotFoundException;
 import com.agile.feedback.models.TeamMember;
-import com.agile.feedback.repositories.CompanyRepository;
-import com.agile.feedback.repositories.ProjectRepository;
-import com.agile.feedback.repositories.TeamMemberRepository;
 import com.agile.feedback.services.CompanyService;
+import com.agile.feedback.services.EvaluationService;
+import com.agile.feedback.services.FeedbackFormService;
+import com.agile.feedback.services.FeedbackItemService;
 import com.agile.feedback.services.ProjectService;
 import com.agile.feedback.services.TeamMemberService;
 
@@ -42,18 +42,18 @@ public class TeamMemberResourceTest {
 
 	@MockBean
 	private ProjectService projectService;
-
+	
 	@MockBean
 	private TeamMemberService teamMemberService;
-
+	
 	@MockBean
-	private CompanyRepository companyRepository;
-
+	private EvaluationService evaluationService;
+	
 	@MockBean
-	private ProjectRepository projectRepository;
-
+	private FeedbackFormService feedbackFormService;
+	
 	@MockBean
-	private TeamMemberRepository teamMemberRepository;
+	private FeedbackItemService feedbackItemService;
 
 	@Test
 	public void whenTeamMemberIdExistsReturnsExistingTeamMember() throws Exception {

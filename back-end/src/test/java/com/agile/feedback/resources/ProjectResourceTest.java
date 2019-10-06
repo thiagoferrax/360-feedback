@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.agile.feedback.dtos.ProjectDTO;
 import com.agile.feedback.exceptions.ProjectNotFoundException;
 import com.agile.feedback.models.Project;
-import com.agile.feedback.repositories.CompanyRepository;
-import com.agile.feedback.repositories.ProjectRepository;
-import com.agile.feedback.repositories.TeamMemberRepository;
 import com.agile.feedback.services.CompanyService;
+import com.agile.feedback.services.EvaluationService;
+import com.agile.feedback.services.FeedbackFormService;
+import com.agile.feedback.services.FeedbackItemService;
 import com.agile.feedback.services.ProjectService;
 import com.agile.feedback.services.TeamMemberService;
 
@@ -46,13 +46,13 @@ public class ProjectResourceTest {
 	private TeamMemberService teamMemberService;
 	
 	@MockBean
-	private CompanyRepository companyRepository;
-
-	@MockBean
-	private ProjectRepository projectRepository;
+	private EvaluationService evaluationService;
 	
 	@MockBean
-	private TeamMemberRepository teamMemberRepository;
+	private FeedbackFormService feedbackFormService;
+	
+	@MockBean
+	private FeedbackItemService feedbackItemService;
 	
 	@Test
 	public void whenProjectIdExistsReturnsExistingProject() throws Exception {

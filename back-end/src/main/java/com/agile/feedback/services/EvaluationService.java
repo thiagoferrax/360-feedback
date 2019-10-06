@@ -30,6 +30,13 @@ public class EvaluationService {
 	@Autowired
 	private EvaluationRepository repository;
 
+	public Evaluation create(Evaluation evaluation) {
+		logger.info(CREATING_A_EVALUATION, evaluation);
+
+		evaluation.setId(null);
+		return repository.save(evaluation);
+	}
+	
 	public List<Evaluation> findAll() {
 		logger.info(FINDING_ALL_EVALUATIONS);
 		return repository.findAll();
