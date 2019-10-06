@@ -107,7 +107,7 @@ public class FeedbackApplication implements CommandLineRunner {
 				technicalPedroEvaluatedByThiago, englishPedroEvaluatedByThiago, technicalThiagoEvaluatedByPedro,
 				englishThiagoEvaluatedByPedro, technicalPedroSelfEvaluation, englishPedroSelfEvaluation);
 
-		if (commandLineRunnerEnable) {
+		if (Boolean.TRUE.equals(commandLineRunnerEnable)) {
 			save(feedback360, companies, projects, teamMembers, feedbackItems, evaluations);
 		}
 	}

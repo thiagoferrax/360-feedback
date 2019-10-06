@@ -114,9 +114,11 @@ public class FeedbackFormResourceTest {
 		// Given
 		Integer id = 1;
 		String name = "360 Dataprev";
+		String description = "360 Dataprev";
 
 		FeedbackFormDTO feedbackFormDtoToCreate = new FeedbackFormDTO();
 		feedbackFormDtoToCreate.setName(name);
+		feedbackFormDtoToCreate.setDescription(description);
 
 		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
 		Project project = new Project(1, "EDOC");
@@ -127,7 +129,7 @@ public class FeedbackFormResourceTest {
 		FeedbackForm newFeedbackForm = new FeedbackForm(id, name, "360 Dataprev", project, author);
 		given(feedbackFormService.create(feedbackFormToCreate)).willReturn(newFeedbackForm);
 
-		String inputJson = "{\"name\":\"360 Dataprev\",\"description\":\"360 Dataprev\", \"project\":{\"name\":\"LifeProof\", \"type\": 1}}";
+		String inputJson = "{\"name\":\"360 Dataprev\",\"description\":\"360 Dataprev\"}";
 
 		// When and Then
 		this.mockMvc.perform(post("/feedbackForms/").contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))

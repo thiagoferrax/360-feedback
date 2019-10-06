@@ -76,38 +76,51 @@ public class EvaluationDTO implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		EvaluationDTO other = (EvaluationDTO) obj;
 		if (evaluator == null) {
-			if (other.evaluator != null)
+			if (other.evaluator != null) {
 				return false;
-		} else if (!evaluator.equals(other.evaluator))
+			}
+		} else if (!evaluator.equals(other.evaluator)) {
 			return false;
+		}
 		if (feedbackItem == null) {
-			if (other.feedbackItem != null)
+			if (other.feedbackItem != null) {
 				return false;
-		} else if (!feedbackItem.equals(other.feedbackItem))
+			}
+		} else if (!feedbackItem.equals(other.feedbackItem)) {
 			return false;
+		}
 		if (grade == null) {
-			if (other.grade != null)
+			if (other.grade != null) {
 				return false;
-		} else if (!grade.equals(other.grade))
+			}
+		} else if (!grade.equals(other.grade)) {
 			return false;
+		}
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (memberEvaluated == null) {
-			if (other.memberEvaluated != null)
+			if (other.memberEvaluated != null) {
 				return false;
-		} else if (!memberEvaluated.equals(other.memberEvaluated))
+			}
+		} else if (!memberEvaluated.equals(other.memberEvaluated)) {
 			return false;
+		}
 		return true;
 	}
 

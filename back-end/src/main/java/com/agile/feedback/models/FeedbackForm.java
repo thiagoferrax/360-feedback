@@ -35,7 +35,7 @@ public class FeedbackForm implements Serializable {
 
 	@ManyToOne
 	private TeamMember author;
-	
+
 	@CreationTimestamp
 	private Date createdAt;
 
@@ -93,7 +93,7 @@ public class FeedbackForm implements Serializable {
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -128,19 +128,23 @@ public class FeedbackForm implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		FeedbackForm other = (FeedbackForm) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		return true;
 	}
-
 }

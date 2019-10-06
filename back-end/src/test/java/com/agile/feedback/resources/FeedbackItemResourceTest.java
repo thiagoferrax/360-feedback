@@ -118,9 +118,11 @@ public class FeedbackItemResourceTest {
 		// Given
 		Integer id = 1;
 		String name = "Technical Experience";
+		String description = "Level of Technical Experience";
 
 		FeedbackItemDTO feedbackItemDtoToCreate = new FeedbackItemDTO();
 		feedbackItemDtoToCreate.setName(name);
+		feedbackItemDtoToCreate.setDescription(description );
 
 		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
 		Project project = new Project(1, "EDOC");

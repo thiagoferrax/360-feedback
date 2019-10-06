@@ -48,19 +48,19 @@ public class TeamMemberResourceTest {
 
 	@MockBean
 	private ProjectService projectService;
-	
+
 	@MockBean
 	private TeamMemberService teamMemberService;
-	
+
 	@MockBean
 	private EvaluationService evaluationService;
-	
+
 	@MockBean
 	private FeedbackFormService feedbackFormService;
-	
+
 	@MockBean
 	private FeedbackItemService feedbackItemService;
-	
+
 	@MockBean
 	private CompanyRepository companyRepository;
 
@@ -110,17 +110,20 @@ public class TeamMemberResourceTest {
 		// Given
 		Integer id = 1;
 		String name = "Thiago";
+		String email = "thiago@email.com";
 
 		TeamMemberDTO teamMemberDtoToCreate = new TeamMemberDTO();
 		teamMemberDtoToCreate.setName(name);
+		teamMemberDtoToCreate.setType(TeamMemberType.DEVELOPER.getCodigo());
+		teamMemberDtoToCreate.setEmail(email);
 
-		TeamMember teamMemberToCreate = new TeamMember(null, name, TeamMemberType.DEVELOPER, "thiago@email.com");
+		TeamMember teamMemberToCreate = new TeamMember(null, name, TeamMemberType.DEVELOPER, email);
 		given(teamMemberService.fromDTO(teamMemberDtoToCreate)).willReturn(teamMemberToCreate);
 
-		TeamMember newTeamMember = new TeamMember(id, name, TeamMemberType.DEVELOPER, "thiago@email.com");
+		TeamMember newTeamMember = new TeamMember(id, name, TeamMemberType.DEVELOPER, email);
 		given(teamMemberService.create(teamMemberToCreate)).willReturn(newTeamMember);
 
-		String inputJson = "{\"name\":\"Thiago\", \"type\": 1, \"email\": \"thiago@email.com\"}";
+		String inputJson = "{\"name\":\"Thiago\", \"type\": 2, \"email\": \"thiago@email.com\"}";
 
 		// When and Then
 		this.mockMvc.perform(post("/teamMembers/").contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))

@@ -31,16 +31,16 @@ public class FeedbackItem implements Serializable {
 
 	@ManyToOne
 	private FeedbackForm form;
-	
+
 	@ManyToOne
 	private FeedbackItem parent;
 
 	@OneToMany(mappedBy = "parent")
 	private Collection<FeedbackItem> children = new ArrayList<>();
-	
+
 	@OneToMany(mappedBy = "feedbackItem")
-	private Collection<Evaluation> itemEvaluations = new ArrayList<>();  
-	
+	private Collection<Evaluation> itemEvaluations = new ArrayList<>();
+
 	@CreationTimestamp
 	private Date createdAt;
 
@@ -114,7 +114,7 @@ public class FeedbackItem implements Serializable {
 	public void setForm(FeedbackForm form) {
 		this.form = form;
 	}
-	
+
 	public FeedbackItem getParent() {
 		return parent;
 	}
@@ -149,18 +149,23 @@ public class FeedbackItem implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		FeedbackItem other = (FeedbackItem) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		return true;
 	}
 

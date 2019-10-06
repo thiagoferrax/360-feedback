@@ -50,13 +50,13 @@ public class FeedbackItemService {
 		return optional.orElseThrow(() -> new FeedbackItemNotFoundException(FEEDBACK_ITEM_NOT_FOUND));
 	}
 
-	public FeedbackItem update(FeedbackItem FeedbackItem) {
+	public FeedbackItem update(FeedbackItem feedbackItem) {
 		logger.info(UPDATING_FEEDBACK_ITEM);
 
-		FeedbackItem foundFeedbackItem = find(FeedbackItem.getId());
-		FeedbackItem.setCreatedAt(foundFeedbackItem.getCreatedAt());
+		FeedbackItem foundFeedbackItem = find(feedbackItem.getId());
+		feedbackItem.setCreatedAt(foundFeedbackItem.getCreatedAt());
 
-		return repository.save(FeedbackItem);
+		return repository.save(feedbackItem);
 	}
 
 	public void remove(Integer id) {
