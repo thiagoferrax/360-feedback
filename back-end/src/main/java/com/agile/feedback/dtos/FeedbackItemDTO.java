@@ -6,6 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.agile.feedback.models.FeedbackForm;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class FeedbackItemDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +21,7 @@ public class FeedbackItemDTO implements Serializable {
 	
 	private Boolean ative;
 
+	@JsonIgnore
 	private FeedbackForm form;
 
 	public Integer getId() {
