@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.agile.feedback.dtos.TeamMemberDTO;
-import com.agile.feedback.models.TeamMember;
-import com.agile.feedback.services.TeamMemberService;
+import com.agile.feedback.dtos.FeedbackFormDTO;
+import com.agile.feedback.models.FeedbackForm;
+import com.agile.feedback.services.FeedbackFormService;
 
 @RestController
 @RequestMapping(value = "/feedbackForms")
-public class FeedbackResource {
+public class FeedbackFormResource {
 
 	public static final String CREATING_NEW_FEEDBACK_FORM = "Creating a new feedback form";
 	public static final String UPDATING_FEEDBACK_FORM = "Updating feedback form";
@@ -33,53 +33,53 @@ public class FeedbackResource {
 	public static final String GETTING_FEEDBACK_FORM_BY_ID = "Getting feedback form";
 	public static final String GETTING_ALL_FEEDBACK_FORMS = "Getting all feedback forms";
 
-	Logger logger = LoggerFactory.getLogger(FeedbackResource.class);
+	Logger logger = LoggerFactory.getLogger(FeedbackFormResource.class);
 
 	@Autowired
-	private TeamMemberService service;
+	private FeedbackFormService service;
 
 	@GetMapping(path = "/")
-	public ResponseEntity<List<TeamMember>> getAll() {
+	public ResponseEntity<List<FeedbackForm>> getAll() {
 
 		logger.info(GETTING_ALL_FEEDBACK_FORMS);
 
-		List<TeamMember> feedbackForms = service.findAll();
+		List<FeedbackForm> feedbackForms = service.findAll();
 
 		return ResponseEntity.ok().body(feedbackForms);
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity<TeamMember> create(@Valid @RequestBody TeamMemberDTO feedbackFormDto) {
+	public ResponseEntity<FeedbackForm> create(@Valid @RequestBody FeedbackFormDTO feedbackFormDto) {
 
 		logger.info(CREATING_NEW_FEEDBACK_FORM, feedbackFormDto.getName());
 
-		TeamMember feedbackForm = service.fromDTO(feedbackFormDto);
-		TeamMember newTeamMember = service.create(feedbackForm);
+		FeedbackForm feedbackForm = service.fromDTO(feedbackFormDto);
+		FeedbackForm newFeedbackForm = service.create(feedbackForm);
 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newTeamMember.getId())
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newFeedbackForm.getId())
 				.toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<TeamMember> findTeamMemberById(@PathVariable Integer id) {
+	public ResponseEntity<FeedbackForm> findFeedbackFormById(@PathVariable Integer id) {
 
 		logger.info(GETTING_FEEDBACK_FORM_BY_ID);
 
-		TeamMember feedbackForm = service.find(id);
+		FeedbackForm feedbackForm = service.find(id);
 
 		return ResponseEntity.ok().body(feedbackForm);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<TeamMember> update(@Valid @RequestBody TeamMemberDTO feedbackFormDto,
+	public ResponseEntity<FeedbackForm> update(@Valid @RequestBody FeedbackFormDTO feedbackFormDto,
 			@PathVariable Integer id) {
 
 		logger.info(UPDATING_FEEDBACK_FORM);
 
 		feedbackFormDto.setId(id);
-		TeamMember feedbackForm = service.fromDTO(feedbackFormDto);
+		FeedbackForm feedbackForm = service.fromDTO(feedbackFormDto);
 
 		service.update(feedbackForm);
 
@@ -87,7 +87,7 @@ public class FeedbackResource {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<TeamMember> delete(@PathVariable Integer id) {
+	public ResponseEntity<FeedbackForm> delete(@PathVariable Integer id) {
 
 		logger.info(REMOVING_FEEDBACK_FORM);
 

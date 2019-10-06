@@ -6,6 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.agile.feedback.models.Project;
+import com.agile.feedback.models.TeamMember;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class FeedbackFormDTO implements Serializable {
@@ -21,6 +22,9 @@ public class FeedbackFormDTO implements Serializable {
 
 	@JsonIgnore
 	private Project project;
+
+	@JsonIgnore
+	private TeamMember author;
 
 	public Integer getId() {
 		return id;
@@ -52,6 +56,14 @@ public class FeedbackFormDTO implements Serializable {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+
+	public TeamMember getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(TeamMember author) {
+		this.author = author;
 	}
 
 	@Override

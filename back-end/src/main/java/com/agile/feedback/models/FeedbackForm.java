@@ -33,6 +33,9 @@ public class FeedbackForm implements Serializable {
 	@OneToMany(mappedBy = "form")
 	private Collection<FeedbackItem> items = new ArrayList<FeedbackItem>();
 
+	@ManyToOne
+	private TeamMember author;
+	
 	@CreationTimestamp
 	private Date createdAt;
 
@@ -42,12 +45,13 @@ public class FeedbackForm implements Serializable {
 	public FeedbackForm() {
 	}
 
-	public FeedbackForm(Integer id, String name, String description, Project project) {
+	public FeedbackForm(Integer id, String name, String description, Project project, TeamMember author) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.project = project;
+		this.author = author;
 	}
 
 	public Integer getId() {
@@ -89,6 +93,30 @@ public class FeedbackForm implements Serializable {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Collection<FeedbackItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Collection<FeedbackItem> items) {
+		this.items = items;
+	}
+
+	public TeamMember getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(TeamMember author) {
+		this.author = author;
+	}
 
 	@Override
 	public int hashCode() {
@@ -113,22 +141,6 @@ public class FeedbackForm implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Collection<FeedbackItem> getItems() {
-		return items;
-	}
-
-	public void setItems(Collection<FeedbackItem> items) {
-		this.items = items;
 	}
 
 }

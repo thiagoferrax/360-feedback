@@ -51,7 +51,7 @@ public class FeedbackFormServiceTest {
 		Integer notExistingId = 2;
 
 		Mockito.when(feedbackFormRepository.findById(notExistingId))
-				.thenThrow(new FeedbackFormNotFoundException(FeedbackFormService.FEEDBACK_FORM_NOT_FOUND_FOR_ID + notExistingId));
+				.thenThrow(new FeedbackFormNotFoundException(FeedbackFormService.FEEDBACK_FORM_NOT_FOUND + notExistingId));
 
 		// When
 		feedbackFormService.find(notExistingId);

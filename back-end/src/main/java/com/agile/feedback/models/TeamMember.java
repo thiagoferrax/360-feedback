@@ -45,6 +45,9 @@ public class TeamMember implements Serializable {
 
 	@OneToMany(mappedBy = "memberEvaluated")
 	private Collection<Evaluation> evaluationsAboutMe = new ArrayList<Evaluation>();
+	
+	@OneToMany(mappedBy = "author")
+	private Collection<FeedbackForm> formsCreatedByMe = new ArrayList<FeedbackForm>();
 
 	@CreationTimestamp
 	private Date createdAt;
@@ -133,6 +136,14 @@ public class TeamMember implements Serializable {
 
 	public void setEvaluationsAboutMe(Collection<Evaluation> evaluationsAboutMe) {
 		this.evaluationsAboutMe = evaluationsAboutMe;
+	}
+	
+	public Collection<FeedbackForm> getFormsCreatedByMe() {
+		return formsCreatedByMe;
+	}
+
+	public void setFormsCreatedByMe(Collection<FeedbackForm> formsCreatedByMe) {
+		this.formsCreatedByMe = formsCreatedByMe;
 	}
 
 	@Override

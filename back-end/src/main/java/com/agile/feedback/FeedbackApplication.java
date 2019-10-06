@@ -49,7 +49,7 @@ public class FeedbackApplication implements CommandLineRunner {
 		TeamMember pedro = new TeamMember(null, "Pedro", TeamMemberType.MANAGER, "pedro@email.com");
 		pedro.getProjects().add(edoc);
 
-		FeedbackForm feedback360 = new FeedbackForm(null, "360 Feedback", "360 Feedback", edoc);
+		FeedbackForm feedback360 = new FeedbackForm(null, "360 Feedback", "360 Feedback", edoc, thiago);
 		edoc.getFeedbackForms().add(feedback360);
 
 		FeedbackItem technicalExperience = new FeedbackItem(null, "Technical Experience",
