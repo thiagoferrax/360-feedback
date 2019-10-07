@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.agile.feedback.exceptions.FeedbackFormNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.FeedbackForm;
 import com.agile.feedback.repositories.FeedbackFormRepository;
 
@@ -18,10 +18,10 @@ public class FeedbackFormServiceTest {
 
 	@InjectMocks
 	private FeedbackFormService feedbackFormService;
-			
+
 	@Mock
 	private FeedbackFormRepository feedbackFormRepository;
-	
+
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
@@ -45,16 +45,22 @@ public class FeedbackFormServiceTest {
 		Assert.assertEquals(existingFeedbackForm, feedbackForm);
 	}
 
-	@Test(expected = FeedbackFormNotFoundException.class)
+	@Test
 	public void whenIdDoesNotExistThrowsFeedbackFormNotFoundException() {
 		// Given
 		Integer notExistingId = 2;
 
 		Mockito.when(feedbackFormRepository.findById(notExistingId))
-				.thenThrow(new FeedbackFormNotFoundException(FeedbackFormService.FEEDBACK_FORM_NOT_FOUND + notExistingId));
+				.thenThrow(new ObjectNotFoundException(FeedbackFormService.FEEDBACK_FORM_NOT_FOUND));
 
 		// When
-		feedbackFormService.find(notExistingId);
+		try {
+			feedbackFormService.find(notExistingId);
+			Assert.fail();
+		} catch (ObjectNotFoundException e) {
+			// Then
+			Assert.assertEquals(FeedbackFormService.FEEDBACK_FORM_NOT_FOUND, e.getMessage());
+		}
 	}
 
 	@Test

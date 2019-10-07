@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.agile.feedback.exceptions.FeedbackItemNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.FeedbackItem;
 import com.agile.feedback.repositories.FeedbackItemRepository;
 
@@ -45,16 +45,22 @@ public class FeedbackItemServiceTest {
 		Assert.assertEquals(existingFeedbackItem, feedbackItem);
 	}
 
-	@Test(expected = FeedbackItemNotFoundException.class)
+	@Test
 	public void whenIdDoesNotExistThrowsFeedbackItemNotFoundException() {
 		// Given
 		Integer notExistingId = 2;
 
 		Mockito.when(feedbackItemRepository.findById(notExistingId))
-				.thenThrow(new FeedbackItemNotFoundException(FeedbackItemService.FEEDBACK_ITEM_NOT_FOUND));
+				.thenThrow(new ObjectNotFoundException(FeedbackItemService.FEEDBACK_ITEM_NOT_FOUND));
 
 		// When
-		feedbackItemService.find(notExistingId);
+		try {
+			feedbackItemService.find(notExistingId);
+			Assert.fail();
+		} catch (ObjectNotFoundException e) {
+			// Then
+			Assert.assertEquals(FeedbackItemService.FEEDBACK_ITEM_NOT_FOUND, e.getMessage());
+		}
 	}
 
 	@Test

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agile.feedback.dtos.FeedbackFormDTO;
-import com.agile.feedback.exceptions.FeedbackFormNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.FeedbackForm;
 import com.agile.feedback.repositories.FeedbackFormRepository;
 
@@ -25,12 +25,12 @@ public class FeedbackFormService {
 	public static final String FINDING_FEEDBACK_FORM = "Finding feedback form";
 	public static final String FINDING_ALL_FEEDBACK_FORMS = "Finding all feedback forms";
 	public static final String CREATING_A_FEEDBACK_FORM = "Creating a new feedback form";
-	public static final String UPDATING_FEEDBACK_FORM = "Updating feedback form\"";
+	public static final String UPDATING_FEEDBACK_FORM = "Updating feedback form";
 	@Autowired
 	private FeedbackFormRepository repository;
 
 	public FeedbackForm create(FeedbackForm feedbackForm) {
-		logger.info(CREATING_A_FEEDBACK_FORM, feedbackForm);
+		logger.info(CREATING_A_FEEDBACK_FORM);
 
 		feedbackForm.setId(null);
 		return repository.save(feedbackForm);
@@ -46,7 +46,7 @@ public class FeedbackFormService {
 		logger.info(FINDING_FEEDBACK_FORM);
 
 		Optional<FeedbackForm> optional = repository.findById(feedbackFormId);
-		return optional.orElseThrow(() -> new FeedbackFormNotFoundException(FEEDBACK_FORM_NOT_FOUND + feedbackFormId));
+		return optional.orElseThrow(() -> new ObjectNotFoundException(FEEDBACK_FORM_NOT_FOUND));
 	}
 
 	public FeedbackForm update(FeedbackForm feedbackForm) {

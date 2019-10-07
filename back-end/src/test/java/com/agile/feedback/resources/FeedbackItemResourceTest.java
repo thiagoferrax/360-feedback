@@ -25,7 +25,7 @@ import com.agile.feedback.builders.ProjectBuilder;
 import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.FeedbackItemDTO;
 import com.agile.feedback.enums.TeamMemberType;
-import com.agile.feedback.exceptions.FeedbackItemNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.FeedbackForm;
 import com.agile.feedback.models.FeedbackItem;
 import com.agile.feedback.models.Project;
@@ -118,7 +118,7 @@ public class FeedbackItemResourceTest {
 		Integer notExistingId = 2;
 
 		given(feedbackItemService.find(notExistingId))
-				.willThrow(new FeedbackItemNotFoundException(FeedbackItemService.FEEDBACK_ITEM_NOT_FOUND));
+				.willThrow(new ObjectNotFoundException(FeedbackItemService.FEEDBACK_ITEM_NOT_FOUND));
 
 		// When and Then
 		this.mockMvc.perform(get("/feedbackItems/" + notExistingId)).andExpect(status().isNotFound());

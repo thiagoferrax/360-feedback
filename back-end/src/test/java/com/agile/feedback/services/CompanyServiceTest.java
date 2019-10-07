@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.agile.feedback.exceptions.CompanyNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
 
@@ -18,10 +18,10 @@ public class CompanyServiceTest {
 
 	@InjectMocks
 	private CompanyService companyService;
-	
+
 	@Mock
 	private CompanyRepository companyRepository;
-	
+
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
@@ -45,16 +45,22 @@ public class CompanyServiceTest {
 		Assert.assertEquals(existingCompany, company);
 	}
 
-	@Test(expected = CompanyNotFoundException.class)
+	@Test
 	public void whenIdDoesNotExistThrowsCompanyNotFoundException() {
 		// Given
 		Integer notExistingId = 2;
 
 		Mockito.when(companyRepository.findById(notExistingId))
-				.thenThrow(new CompanyNotFoundException(CompanyService.COMPANY_NOT_FOUND_FOR_ID + notExistingId));
+				.thenThrow(new ObjectNotFoundException(CompanyService.COMPANY_NOT_FOUND));
 
 		// When
-		companyService.find(notExistingId);
+		try {
+			companyService.find(notExistingId);
+			Assert.fail();
+		} catch (ObjectNotFoundException e) {
+			// Then
+			Assert.assertEquals(CompanyService.COMPANY_NOT_FOUND, e.getMessage());
+		}
 	}
 
 	@Test

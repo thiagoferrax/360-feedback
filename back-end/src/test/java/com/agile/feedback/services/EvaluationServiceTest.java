@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.agile.feedback.exceptions.EvaluationNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Evaluation;
 import com.agile.feedback.repositories.EvaluationRepository;
 
@@ -45,16 +45,22 @@ public class EvaluationServiceTest {
 		Assert.assertEquals(existingEvaluation, evaluation);
 	}
 
-	@Test(expected = EvaluationNotFoundException.class)
+	@Test
 	public void whenIdDoesNotExistThrowsEvaluationNotFoundException() {
 		// Given
 		Integer notExistingId = 2;
 
 		Mockito.when(evaluationRepository.findById(notExistingId))
-				.thenThrow(new EvaluationNotFoundException(EvaluationService.EVALUATION_NOT_FOUND));
+				.thenThrow(new ObjectNotFoundException(EvaluationService.EVALUATION_NOT_FOUND));
 
 		// When
-		evaluationService.find(notExistingId);
+		try {
+			evaluationService.find(notExistingId);
+			Assert.fail();
+		} catch (ObjectNotFoundException e) {
+			// Then
+			Assert.assertEquals(EvaluationService.EVALUATION_NOT_FOUND, e.getMessage());
+		}
 	}
 
 	@Test

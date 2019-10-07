@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.agile.feedback.dtos.CompanyDTO;
 import com.agile.feedback.enums.CompanyType;
-import com.agile.feedback.exceptions.CompanyNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
 
@@ -21,12 +21,12 @@ public class CompanyService {
 
 	Logger logger = LoggerFactory.getLogger(CompanyService.class);
 
-	public static final String UPDATING_COMPANY = "Updating company: {0}";
-	public static final String REMOVING_COMPANY = "Removing company, id: {0}";
-	public static final String COMPANY_NOT_FOUND_FOR_ID = "Company not found for id ";
-	public static final String FINDING_COMPANY_BY_ID = "Finding company, id: {0}";
+	public static final String UPDATING_COMPANY = "Updating company";
+	public static final String REMOVING_COMPANY = "Removing company";
+	public static final String COMPANY_NOT_FOUND = "Company not found";
+	public static final String FINDING_COMPANY_BY_ID = "Finding company by id";
 	public static final String FINDING_ALL_COMPANIES = "Finding all companies";
-	public static final String CREATING_A_COMPANY = "Creating a company: {0}";
+	public static final String CREATING_A_COMPANY = "Creating a company";
 
 	@Autowired
 	private CompanyRepository repository;
@@ -45,10 +45,10 @@ public class CompanyService {
 
 	public Company find(Integer companyId) {
 
-		logger.info(FINDING_COMPANY_BY_ID, companyId);
+		logger.info(FINDING_COMPANY_BY_ID);
 
 		Optional<Company> optional = repository.findById(companyId);
-		return optional.orElseThrow(() -> new CompanyNotFoundException(COMPANY_NOT_FOUND_FOR_ID + companyId));
+		return optional.orElseThrow(() -> new ObjectNotFoundException(COMPANY_NOT_FOUND));
 	}
 
 	public Company update(Company company) {
@@ -62,13 +62,14 @@ public class CompanyService {
 
 	public void remove(Integer id) {
 
-		logger.info(REMOVING_COMPANY, id);
+		logger.info(REMOVING_COMPANY);
 
 		find(id);
 		repository.deleteById(id);
 	}
 
 	public Company fromDTO(@Valid CompanyDTO companyDto) {
-		return new Company(companyDto.getId(), companyDto.getName(), CompanyType.findByCodigo(companyDto.getType()), companyDto.getHeadOffice());
+		return new Company(companyDto.getId(), companyDto.getName(), CompanyType.findByCodigo(companyDto.getType()),
+				companyDto.getHeadOffice());
 	}
 }

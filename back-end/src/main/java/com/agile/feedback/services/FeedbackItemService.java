@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agile.feedback.dtos.FeedbackItemDTO;
-import com.agile.feedback.exceptions.FeedbackItemNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.FeedbackItem;
 import com.agile.feedback.repositories.FeedbackItemRepository;
 
@@ -47,7 +47,7 @@ public class FeedbackItemService {
 		logger.info(FINDING_FEEDBACK_ITEM);
 
 		Optional<FeedbackItem> optional = repository.findById(feedbackItemId);
-		return optional.orElseThrow(() -> new FeedbackItemNotFoundException(FEEDBACK_ITEM_NOT_FOUND));
+		return optional.orElseThrow(() -> new ObjectNotFoundException(FEEDBACK_ITEM_NOT_FOUND));
 	}
 
 	public FeedbackItem update(FeedbackItem feedbackItem) {

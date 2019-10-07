@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.TeamMemberDTO;
 import com.agile.feedback.enums.TeamMemberType;
-import com.agile.feedback.exceptions.TeamMemberNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.TeamMember;
 import com.agile.feedback.repositories.CompanyRepository;
 import com.agile.feedback.repositories.EvaluationRepository;
@@ -101,7 +101,7 @@ public class TeamMemberResourceTest {
 		Integer notExistingId = 2;
 
 		given(teamMemberService.find(notExistingId)).willThrow(
-				new TeamMemberNotFoundException(TeamMemberService.TEAM_MEMBER_NOT_FOUND_FOR_ID + notExistingId));
+				new ObjectNotFoundException(TeamMemberService.TEAM_MEMBER_NOT_FOUND_FOR_ID));
 
 		// When and Then
 		this.mockMvc.perform(get("/teamMembers/" + notExistingId)).andExpect(status().isNotFound());

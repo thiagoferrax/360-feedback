@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agile.feedback.dtos.EvaluationDTO;
-import com.agile.feedback.exceptions.EvaluationNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Evaluation;
 import com.agile.feedback.repositories.EvaluationRepository;
 
@@ -47,7 +47,7 @@ public class EvaluationService {
 		logger.info(FINDING_EVALUATION);
 
 		Optional<Evaluation> optional = repository.findById(evaluationId);
-		return optional.orElseThrow(() -> new EvaluationNotFoundException(EVALUATION_NOT_FOUND));
+		return optional.orElseThrow(() -> new ObjectNotFoundException(EVALUATION_NOT_FOUND));
 	}
 
 	public Evaluation update(Evaluation evaluation) {

@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.agile.feedback.exceptions.TeamMemberNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.TeamMember;
 import com.agile.feedback.repositories.TeamMemberRepository;
 
@@ -18,10 +18,10 @@ public class TeamMemberServiceTest {
 
 	@InjectMocks
 	private TeamMemberService teamMemberService;
-			
+
 	@Mock
 	private TeamMemberRepository teamMemberRepository;
-	
+
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
@@ -45,16 +45,22 @@ public class TeamMemberServiceTest {
 		Assert.assertEquals(existingTeamMember, teamMember);
 	}
 
-	@Test(expected = TeamMemberNotFoundException.class)
+	@Test
 	public void whenIdDoesNotExistThrowsTeamMemberNotFoundException() {
 		// Given
 		Integer notExistingId = 2;
 
 		Mockito.when(teamMemberRepository.findById(notExistingId))
-				.thenThrow(new TeamMemberNotFoundException(TeamMemberService.TEAM_MEMBER_NOT_FOUND_FOR_ID + notExistingId));
+				.thenThrow(new ObjectNotFoundException(TeamMemberService.TEAM_MEMBER_NOT_FOUND_FOR_ID));
 
 		// When
-		teamMemberService.find(notExistingId);
+		try {
+			teamMemberService.find(notExistingId);
+			Assert.fail();
+		} catch (ObjectNotFoundException e) {
+			// Then
+			Assert.assertEquals(TeamMemberService.TEAM_MEMBER_NOT_FOUND_FOR_ID, e.getMessage());
+		}
 	}
 
 	@Test

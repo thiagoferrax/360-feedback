@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.agile.feedback.exceptions.ProjectNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Project;
 import com.agile.feedback.repositories.ProjectRepository;
 
@@ -18,10 +18,10 @@ public class ProjectServiceTest {
 
 	@InjectMocks
 	private ProjectService projectService;
-	
+
 	@Mock
 	private ProjectRepository projectRepository;
-	
+
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
@@ -45,16 +45,22 @@ public class ProjectServiceTest {
 		Assert.assertEquals(existingProject, project);
 	}
 
-	@Test(expected = ProjectNotFoundException.class)
+	@Test
 	public void whenIdDoesNotExistThrowsProjectNotFoundException() {
 		// Given
 		Integer notExistingId = 2;
 
 		Mockito.when(projectRepository.findById(notExistingId))
-				.thenThrow(new ProjectNotFoundException(ProjectService.PROJECT_NOT_FOUND_FOR_ID + notExistingId));
+				.thenThrow(new ObjectNotFoundException(ProjectService.PROJECT_NOT_FOUND_FOR_ID));
 
 		// When
-		projectService.find(notExistingId);
+		try {
+			projectService.find(notExistingId);
+			Assert.fail();
+		} catch (ObjectNotFoundException e) {
+			// Then
+			Assert.assertEquals(ProjectService.PROJECT_NOT_FOUND_FOR_ID, e.getMessage());
+		}
 	}
 
 	@Test

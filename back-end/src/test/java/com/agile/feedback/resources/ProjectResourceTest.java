@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.agile.feedback.builders.ProjectBuilder;
 import com.agile.feedback.dtos.ProjectDTO;
-import com.agile.feedback.exceptions.ProjectNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Project;
 import com.agile.feedback.repositories.CompanyRepository;
 import com.agile.feedback.repositories.EvaluationRepository;
@@ -99,7 +99,7 @@ public class ProjectResourceTest {
 		Integer notExistingId = 2;
 
 		given(projectService.find(notExistingId))
-				.willThrow(new ProjectNotFoundException(ProjectService.PROJECT_NOT_FOUND_FOR_ID + notExistingId));
+				.willThrow(new ObjectNotFoundException(ProjectService.PROJECT_NOT_FOUND_FOR_ID + notExistingId));
 
 		// When and Then
 		this.mockMvc.perform(get("/projects/" + notExistingId)).andExpect(status().isNotFound());

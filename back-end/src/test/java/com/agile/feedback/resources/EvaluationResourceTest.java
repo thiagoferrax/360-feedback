@@ -25,7 +25,7 @@ import com.agile.feedback.builders.ProjectBuilder;
 import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.EvaluationDTO;
 import com.agile.feedback.enums.TeamMemberType;
-import com.agile.feedback.exceptions.EvaluationNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Evaluation;
 import com.agile.feedback.models.FeedbackForm;
 import com.agile.feedback.models.FeedbackItem;
@@ -123,7 +123,7 @@ public class EvaluationResourceTest {
 		Integer notExistingId = 2;
 
 		given(evaluationService.find(notExistingId))
-				.willThrow(new EvaluationNotFoundException(EvaluationService.EVALUATION_NOT_FOUND));
+				.willThrow(new ObjectNotFoundException(EvaluationService.EVALUATION_NOT_FOUND));
 
 		// When and Then
 		this.mockMvc.perform(get("/evaluations/" + notExistingId)).andExpect(status().isNotFound());

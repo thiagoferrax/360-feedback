@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agile.feedback.dtos.ProjectDTO;
-import com.agile.feedback.exceptions.ProjectNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Project;
 import com.agile.feedback.repositories.ProjectRepository;
 
@@ -47,7 +47,7 @@ public class ProjectService {
 		logger.info(FINDING_PROJECT_BY_ID, projectId);
 
 		Optional<Project> optional = repository.findById(projectId);
-		return optional.orElseThrow(() -> new ProjectNotFoundException(PROJECT_NOT_FOUND_FOR_ID + projectId));
+		return optional.orElseThrow(() -> new ObjectNotFoundException(PROJECT_NOT_FOUND_FOR_ID + projectId));
 	}
 
 	public Project update(Project project) {

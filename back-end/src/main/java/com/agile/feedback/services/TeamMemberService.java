@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.agile.feedback.dtos.TeamMemberDTO;
 import com.agile.feedback.enums.TeamMemberType;
-import com.agile.feedback.exceptions.TeamMemberNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.TeamMember;
 import com.agile.feedback.repositories.TeamMemberRepository;
 
@@ -21,12 +21,12 @@ public class TeamMemberService {
 
 	Logger logger = LoggerFactory.getLogger(TeamMemberService.class);
 
-	public static final String UPDATING_TEAM_MEMBER = "Updating team member: {0}";
-	public static final String REMOVING_TEAM_MEMBER = "Removing team member, id: {0}";
+	public static final String UPDATING_TEAM_MEMBER = "Updating team member";
+	public static final String REMOVING_TEAM_MEMBER = "Removing team member";
 	public static final String TEAM_MEMBER_NOT_FOUND_FOR_ID = "Team member not found for id ";
-	public static final String FINDING_TEAM_MEMBER_BY_ID = "Finding team member, id: {0}";
+	public static final String FINDING_TEAM_MEMBER_BY_ID = "Finding team member";
 	public static final String FINDING_ALL_TEAM_MEMBERS = "Finding all team members";
-	public static final String CREATING_A_TEAM_MEMBER = "Creating a team member: {0}";
+	public static final String CREATING_A_TEAM_MEMBER = "Creating a team member";
 
 	@Autowired
 	private TeamMemberRepository repository;
@@ -48,7 +48,7 @@ public class TeamMemberService {
 		logger.info(FINDING_TEAM_MEMBER_BY_ID, teamMemberId);
 
 		Optional<TeamMember> optional = repository.findById(teamMemberId);
-		return optional.orElseThrow(() -> new TeamMemberNotFoundException(TEAM_MEMBER_NOT_FOUND_FOR_ID + teamMemberId));
+		return optional.orElseThrow(() -> new ObjectNotFoundException(TEAM_MEMBER_NOT_FOUND_FOR_ID));
 	}
 
 	public TeamMember update(TeamMember teamMember) {
@@ -62,7 +62,7 @@ public class TeamMemberService {
 
 	public void remove(Integer id) {
 
-		logger.info(REMOVING_TEAM_MEMBER, id);
+		logger.info(REMOVING_TEAM_MEMBER);
 
 		find(id);
 		repository.deleteById(id);

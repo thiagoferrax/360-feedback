@@ -25,7 +25,7 @@ import com.agile.feedback.builders.ProjectBuilder;
 import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.FeedbackFormDTO;
 import com.agile.feedback.enums.TeamMemberType;
-import com.agile.feedback.exceptions.FeedbackFormNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.FeedbackForm;
 import com.agile.feedback.models.Project;
 import com.agile.feedback.models.TeamMember;
@@ -117,7 +117,7 @@ public class FeedbackFormResourceTest {
 		Integer notExistingId = 2;
 
 		given(feedbackFormService.find(notExistingId))
-				.willThrow(new FeedbackFormNotFoundException(FeedbackFormService.FEEDBACK_FORM_NOT_FOUND));
+				.willThrow(new ObjectNotFoundException(FeedbackFormService.FEEDBACK_FORM_NOT_FOUND));
 
 		// When and Then
 		this.mockMvc.perform(get("/feedbackForms/" + notExistingId)).andExpect(status().isNotFound());

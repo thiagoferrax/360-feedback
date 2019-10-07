@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.agile.feedback.builders.CompanyBuilder;
 import com.agile.feedback.dtos.CompanyDTO;
 import com.agile.feedback.enums.CompanyType;
-import com.agile.feedback.exceptions.CompanyNotFoundException;
+import com.agile.feedback.exceptions.ObjectNotFoundException;
 import com.agile.feedback.models.Company;
 import com.agile.feedback.repositories.CompanyRepository;
 import com.agile.feedback.repositories.EvaluationRepository;
@@ -101,7 +101,7 @@ public class CompanyResourceTest {
 		Integer notExistingId = 2;
 
 		given(companyService.find(notExistingId))
-				.willThrow(new CompanyNotFoundException(CompanyService.COMPANY_NOT_FOUND_FOR_ID));
+				.willThrow(new ObjectNotFoundException(CompanyService.COMPANY_NOT_FOUND));
 
 		// When and Then
 		this.mockMvc.perform(get("/companies/" + notExistingId)).andExpect(status().isNotFound());
