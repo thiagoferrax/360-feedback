@@ -27,11 +27,11 @@ import com.agile.feedback.services.TeamMemberService;
 @RequestMapping(value = "/teamMembers")
 public class TeamMemberResource {
 
-	public static final String CREATING_NEW_TEAM_MEMBER = "Creating a new team member: {0}";
-	public static final String UPDATING_TEAM_MEMBER = "Updating team member: {0}";
-	public static final String REMOVING_TEAM_MEMBER = "Removing team member, id: {0}";
-	public static final String GETTING_TEAM_MEMBER_BY_ID = "Getting team member by id: {0}";
-	public static final String GETTING_ALL_TEAM_MEMBERS = "Getting all team member by id: {0}";
+	public static final String CREATING_NEW_TEAM_MEMBER = "Creating a new team member";
+	public static final String UPDATING_TEAM_MEMBER = "Updating team member";
+	public static final String REMOVING_TEAM_MEMBER = "Removing team member";
+	public static final String GETTING_TEAM_MEMBER_BY_ID = "Getting team member by id";
+	public static final String GETTING_ALL_TEAM_MEMBERS = "Getting all team members";
 
 	Logger logger = LoggerFactory.getLogger(TeamMemberResource.class);
 
@@ -65,7 +65,7 @@ public class TeamMemberResource {
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<TeamMember> findTeamMemberById(@PathVariable Integer id) {
 
-		logger.info(GETTING_TEAM_MEMBER_BY_ID, id);
+		logger.info(GETTING_TEAM_MEMBER_BY_ID);
 
 		TeamMember teamMember = service.find(id);
 
@@ -76,7 +76,7 @@ public class TeamMemberResource {
 	public ResponseEntity<TeamMember> update(@Valid @RequestBody TeamMemberDTO teamMemberDto,
 			@PathVariable Integer id) {
 
-		logger.info(UPDATING_TEAM_MEMBER, id);
+		logger.info(UPDATING_TEAM_MEMBER);
 
 		teamMemberDto.setId(id);
 		TeamMember teamMember = service.fromDTO(teamMemberDto);
@@ -89,7 +89,7 @@ public class TeamMemberResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<TeamMember> delete(@PathVariable Integer id) {
 
-		logger.info(REMOVING_TEAM_MEMBER, id);
+		logger.info(REMOVING_TEAM_MEMBER);
 
 		service.remove(id);
 

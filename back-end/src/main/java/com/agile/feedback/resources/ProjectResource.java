@@ -27,11 +27,11 @@ import com.agile.feedback.services.ProjectService;
 @RequestMapping(value = "/projects")
 public class ProjectResource {
 
-	public static final String CREATING_NEW_PROJECT = "Creating a new project: {0}";
-	public static final String UPDATING_PROJECT = "Updating project: {0}";
-	public static final String REMOVING_PROJECT = "Removing project, id: {0}";
-	public static final String GETTING_PROJECT_BY_ID = "Getting project by id: {0}";
-	public static final String GETTING_ALL_PROJECTS = "Getting all project by id: {0}";
+	public static final String CREATING_NEW_PROJECT = "Creating a new project";
+	public static final String UPDATING_PROJECT = "Updating project";
+	public static final String REMOVING_PROJECT = "Removing project";
+	public static final String GETTING_PROJECT_BY_ID = "Getting project by id";
+	public static final String GETTING_ALL_PROJECTS = "Getting all projects";
 
 	Logger logger = LoggerFactory.getLogger(ProjectResource.class);
 
@@ -65,7 +65,7 @@ public class ProjectResource {
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<Project> findProjectById(@PathVariable Integer id) {
 
-		logger.info(GETTING_PROJECT_BY_ID, id);
+		logger.info(GETTING_PROJECT_BY_ID);
 
 		Project project = service.find(id);
 
@@ -75,7 +75,7 @@ public class ProjectResource {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Project> update(@Valid @RequestBody ProjectDTO projectDto, @PathVariable Integer id) {
 
-		logger.info(UPDATING_PROJECT, id);
+		logger.info(UPDATING_PROJECT);
 
 		projectDto.setId(id);
 		Project project = service.fromDTO(projectDto);
@@ -88,7 +88,7 @@ public class ProjectResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Project> delete(@PathVariable Integer id) {
 
-		logger.info(REMOVING_PROJECT, id);
+		logger.info(REMOVING_PROJECT);
 
 		service.remove(id);
 
