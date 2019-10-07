@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.agile.feedback.builders.FeedbackFormBuilder;
+import com.agile.feedback.builders.ProjectBuilder;
+import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.FeedbackItemDTO;
 import com.agile.feedback.enums.TeamMemberType;
 import com.agile.feedback.exceptions.FeedbackItemNotFoundException;
@@ -63,7 +67,7 @@ public class FeedbackItemResourceTest {
 
 	@MockBean
 	private FeedbackItemService feedbackItemService;
-	
+
 	@MockBean
 	private CompanyRepository companyRepository;
 
@@ -82,14 +86,21 @@ public class FeedbackItemResourceTest {
 	@MockBean
 	private EvaluationRepository evaluationRepository;
 
+	private FeedbackForm feedback360;
+
+	@Before
+	public void setUp() {
+		Project edoc = ProjectBuilder.newProject().withId(1).withName("EDOC").now();
+		TeamMember thiago = TeamMemberBuilder.newTeamMember().withId(1).withName("Thiago")
+				.withType(TeamMemberType.DEVELOPER).withEmail("thiago@email.com").now();
+		feedback360 = FeedbackFormBuilder.newFeedbackForm().withId(1).withName("360 Dataprev")
+				.withDescription("360 Feedback Dataprev").withProject(edoc).withAuthor(thiago).now();
+	}
+
 	@Test
 	public void whenFeedbackItemIdExistsReturnsExistingFeedbackItem() throws Exception {
 		// Given
 		Integer existingId = 1;
-
-		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedback360 = new FeedbackForm(1, "360 Dataprev", "360 Dataprev", project, author);
 
 		FeedbackItem feedbackItem = new FeedbackItem(existingId, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);
@@ -120,13 +131,7 @@ public class FeedbackItemResourceTest {
 		String name = "Technical Experience";
 		String description = "Level of Technical Experience";
 
-		FeedbackItemDTO feedbackItemDtoToCreate = new FeedbackItemDTO();
-		feedbackItemDtoToCreate.setName(name);
-		feedbackItemDtoToCreate.setDescription(description );
-
-		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedback360 = new FeedbackForm(1, "360 Dataprev", "360 Dataprev", project, author);
+		FeedbackItemDTO feedbackItemDtoToCreate = new FeedbackItemDTO(name, description);
 
 		FeedbackItem feedbackItemToCreate = new FeedbackItem(null, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);
@@ -148,15 +153,11 @@ public class FeedbackItemResourceTest {
 	@Test
 	public void whenUpdatingAFeedbackItemReturnsStatusNoContent() throws Exception {
 		// Given
-		String name = "360 Dataprev";
 		Integer existingCode = 1;
+		String name = "Technical Experience";
+		String description = "Level of Technical Experience";
 
-		FeedbackItemDTO feedbackItemDtoToFind = new FeedbackItemDTO();
-		feedbackItemDtoToFind.setName(name);
-
-		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedback360 = new FeedbackForm(1, "360 Dataprev", "360 Dataprev", project, author);
+		FeedbackItemDTO feedbackItemDtoToFind = new FeedbackItemDTO(name, description);
 
 		FeedbackItem feedbackItemToFind = new FeedbackItem(null, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);

@@ -22,6 +22,14 @@ public class EvaluationDTO implements Serializable {
 	@JsonIgnore
 	private TeamMember memberEvaluated;
 
+	public EvaluationDTO() {
+	}
+	
+	public EvaluationDTO(Double grade) {
+		super();
+		this.grade = grade;
+	}
+
 	public Integer getId() {
 		return id;
 	}

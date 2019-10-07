@@ -21,6 +21,16 @@ public class TeamMemberDTO implements Serializable {
 	@NotEmpty
 	private String email;
 
+	public TeamMemberDTO() {
+	}
+
+	public TeamMemberDTO(@NotNull @NotEmpty String name, @NotNull Integer type, @NotNull @NotEmpty String email) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.email = email;
+	}
+
 	public Integer getId() {
 		return id;
 	}

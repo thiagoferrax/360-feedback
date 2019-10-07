@@ -13,6 +13,14 @@ public class ProjectDTO implements Serializable {
 	@NotNull
 	@NotEmpty
 	private String name;
+	
+	public ProjectDTO() {
+	}
+
+	public ProjectDTO(@NotNull @NotEmpty String name) {
+		super();
+		this.name = name;
+	}
 
 	public Integer getId() {
 		return id;

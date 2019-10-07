@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.agile.feedback.builders.FeedbackFormBuilder;
+import com.agile.feedback.builders.ProjectBuilder;
+import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.EvaluationDTO;
 import com.agile.feedback.enums.TeamMemberType;
 import com.agile.feedback.exceptions.EvaluationNotFoundException;
@@ -64,7 +68,7 @@ public class EvaluationResourceTest {
 
 	@MockBean
 	private FeedbackItemService feedbackItemService;
-	
+
 	@MockBean
 	private CompanyRepository companyRepository;
 
@@ -83,24 +87,34 @@ public class EvaluationResourceTest {
 	@MockBean
 	private EvaluationRepository evaluationRepository;
 
+	private TeamMember thiago;
+
+	private FeedbackForm feedback360;
+
+	@Before
+	public void setUp() {
+		Project edoc = ProjectBuilder.newProject().withId(1).withName("EDOC").now();
+		thiago = TeamMemberBuilder.newTeamMember().withId(1).withName("Thiago").withType(TeamMemberType.DEVELOPER)
+				.withEmail("thiago@email.com").now();
+		feedback360 = FeedbackFormBuilder.newFeedbackForm().withId(1).withName("360 Dataprev")
+				.withDescription("360 Feedback Dataprev").withProject(edoc).withAuthor(thiago).now();
+	}
+
 	@Test
 	public void whenEvaluationIdExistsReturnsExistingEvaluation() throws Exception {
 		// Given
 		Integer existingId = 1;
 
-		TeamMember thiago = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedback360 = new FeedbackForm(1, "360 Dataprev", "360 Dataprev", project, thiago);
-
 		FeedbackItem feedbackItem = new FeedbackItem(existingId, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);
+
 		Evaluation evaluation = new Evaluation(existingId, 10.0, feedbackItem, thiago, thiago);
 
 		given(evaluationService.find(existingId)).willReturn(evaluation);
 
 		// When and Then
 		this.mockMvc.perform(get("/evaluations/" + existingId)).andExpect(status().isOk())
-				.andExpect(content().json("{'id':1,'grade':10.0,'createdAt': null,'updatedAt': null}"));
+				.andExpect(content().json("{'id':1,'grade':10.0}"));
 	}
 
 	@Test
@@ -120,12 +134,8 @@ public class EvaluationResourceTest {
 		// Given
 		Integer id = 1;
 		Double grade = 10.0;
-		EvaluationDTO evaluationDtoToCreate = new EvaluationDTO();
-		evaluationDtoToCreate.setGrade(grade);
+		EvaluationDTO evaluationDtoToCreate = new EvaluationDTO(grade);
 
-		TeamMember thiago = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedback360 = new FeedbackForm(1, "360 Dataprev", "360 Dataprev", project, thiago);
 		FeedbackItem feedbackItem = new FeedbackItem(1, "Technical Experience", "Level of Technical Experience", true,
 				feedback360);
 
@@ -134,6 +144,7 @@ public class EvaluationResourceTest {
 		given(evaluationService.fromDTO(evaluationDtoToCreate)).willReturn(evaluationToCreate);
 
 		Evaluation newEvaluation = new Evaluation(id, 10.0, feedbackItem, thiago, thiago);
+
 		given(evaluationService.create(evaluationToCreate)).willReturn(newEvaluation);
 
 		String inputJson = "{\"grade\": 10.0}";
@@ -151,17 +162,12 @@ public class EvaluationResourceTest {
 		Integer existingId = 1;
 		Double grade = 10.0;
 
-		EvaluationDTO evaluationDtoToFind = new EvaluationDTO();
-		evaluationDtoToFind.setGrade(grade);
-
-		TeamMember thiago = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedback360 = new FeedbackForm(1, "360 Dataprev", "360 Dataprev", project, thiago);
+		EvaluationDTO evaluationDtoToFind = new EvaluationDTO(grade);
 
 		FeedbackItem feedbackItem = new FeedbackItem(existingId, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);
 		Evaluation evaluationToFind = new Evaluation(existingId, 10.0, feedbackItem, thiago, thiago);
-		;
+
 		given(evaluationService.fromDTO(evaluationDtoToFind)).willReturn(evaluationToFind);
 
 		String inputJson = "{\"name\":\"Technical Experience\",\"description\":\"Level of Technical Experience\", \"active\": true, \"form\": {\"name\":\"360 Dataprev\",\"description\":\"360 Dataprev\", \"project\":{\"name\":\"LifeProof\", \"type\": 1}}}";

@@ -20,6 +20,15 @@ public class FeedbackItemDTO implements Serializable {
 	private String description;
 	
 	private Boolean ative;
+	
+	public FeedbackItemDTO() {
+	}
+
+	public FeedbackItemDTO(@NotNull @NotEmpty String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
 
 	@JsonIgnore
 	private FeedbackForm form;

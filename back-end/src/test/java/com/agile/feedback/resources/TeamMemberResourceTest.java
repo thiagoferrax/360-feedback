@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.TeamMemberDTO;
 import com.agile.feedback.enums.TeamMemberType;
 import com.agile.feedback.exceptions.TeamMemberNotFoundException;
@@ -84,13 +85,14 @@ public class TeamMemberResourceTest {
 		// Given
 		Integer existingId = 1;
 
-		TeamMember teamMember = new TeamMember(existingId, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
+		TeamMember teamMember = TeamMemberBuilder.newTeamMember().withId(existingId).withName("Thiago")
+				.withType(TeamMemberType.DEVELOPER).withEmail("thiago@email.com").now();
 
 		given(teamMemberService.find(existingId)).willReturn(teamMember);
 
 		// When and Then
 		this.mockMvc.perform(get("/teamMembers/" + existingId)).andExpect(status().isOk())
-				.andExpect(content().json("{'id':1,'name':'Thiago','createdAt': null,'updatedAt': null}"));
+				.andExpect(content().json("{'id':1,'name':'Thiago'}"));
 	}
 
 	@Test
@@ -112,15 +114,15 @@ public class TeamMemberResourceTest {
 		String name = "Thiago";
 		String email = "thiago@email.com";
 
-		TeamMemberDTO teamMemberDtoToCreate = new TeamMemberDTO();
-		teamMemberDtoToCreate.setName(name);
-		teamMemberDtoToCreate.setType(TeamMemberType.DEVELOPER.getCodigo());
-		teamMemberDtoToCreate.setEmail(email);
+		TeamMemberDTO teamMemberDtoToCreate = new TeamMemberDTO(name, TeamMemberType.DEVELOPER.getCodigo(), email);
+		TeamMember teamMemberToCreate = TeamMemberBuilder.newTeamMember().withName(name)
+				.withType(TeamMemberType.DEVELOPER).withEmail(email).now();
 
-		TeamMember teamMemberToCreate = new TeamMember(null, name, TeamMemberType.DEVELOPER, email);
 		given(teamMemberService.fromDTO(teamMemberDtoToCreate)).willReturn(teamMemberToCreate);
 
-		TeamMember newTeamMember = new TeamMember(id, name, TeamMemberType.DEVELOPER, email);
+		TeamMember newTeamMember = TeamMemberBuilder.newTeamMember().withId(id).withName(name)
+				.withType(TeamMemberType.DEVELOPER).withEmail(email).now();
+
 		given(teamMemberService.create(teamMemberToCreate)).willReturn(newTeamMember);
 
 		String inputJson = "{\"name\":\"Thiago\", \"type\": 2, \"email\": \"thiago@email.com\"}";
@@ -135,16 +137,16 @@ public class TeamMemberResourceTest {
 	@Test
 	public void whenUpdatingATeamMemberReturnsStatusNoContent() throws Exception {
 		// Given
-		String name = "Thiago";
 		Integer existingCode = 1;
+		String name = "Thiago";
+		String email = "thiago@email.com";
 
-		TeamMemberDTO teamMemberDtoToFind = new TeamMemberDTO();
-		teamMemberDtoToFind.setName(name);
+		TeamMemberDTO teamMemberDtoToFind = new TeamMemberDTO(name, TeamMemberType.DEVELOPER.getCodigo(), email);
 
 		TeamMember teamMemberToFind = new TeamMember(null, name, TeamMemberType.DEVELOPER, "thiago@email.com");
 		given(teamMemberService.fromDTO(teamMemberDtoToFind)).willReturn(teamMemberToFind);
 
-		String inputJson = "{\"name\":\"Thiago\", \"type\": 1, \"email\": \"thiago@email.com\"}";
+		String inputJson = "{\"name\":\"Thiago\", \"type\": 2, \"email\": \"thiago@email.com\"}";
 
 		// When and Then
 		this.mockMvc.perform(

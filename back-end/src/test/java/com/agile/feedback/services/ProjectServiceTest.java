@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.agile.feedback.exceptions.ProjectNotFoundException;
 import com.agile.feedback.models.Project;
-import com.agile.feedback.repositories.CompanyRepository;
 import com.agile.feedback.repositories.ProjectRepository;
 
 public class ProjectServiceTest {

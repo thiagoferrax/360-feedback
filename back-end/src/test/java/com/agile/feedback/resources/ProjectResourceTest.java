@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.agile.feedback.builders.ProjectBuilder;
 import com.agile.feedback.dtos.ProjectDTO;
 import com.agile.feedback.exceptions.ProjectNotFoundException;
 import com.agile.feedback.models.Project;
@@ -47,19 +48,19 @@ public class ProjectResourceTest {
 
 	@MockBean
 	private ProjectService projectService;
-	
+
 	@MockBean
 	private TeamMemberService teamMemberService;
-	
+
 	@MockBean
 	private EvaluationService evaluationService;
-	
+
 	@MockBean
 	private FeedbackFormService feedbackFormService;
-	
+
 	@MockBean
 	private FeedbackItemService feedbackItemService;
-	
+
 	@MockBean
 	private CompanyRepository companyRepository;
 
@@ -77,21 +78,21 @@ public class ProjectResourceTest {
 
 	@MockBean
 	private EvaluationRepository evaluationRepository;
-	
+
 	@Test
 	public void whenProjectIdExistsReturnsExistingProject() throws Exception {
 		// Given
 		Integer existingId = 1;
 
-		Project project = new Project(existingId, "LifeProof");
+		Project project = ProjectBuilder.newProject().withId(existingId).withName("LifeProof").now();
 
 		given(projectService.find(existingId)).willReturn(project);
 
 		// When and Then
-		this.mockMvc.perform(get("/projects/" + existingId)).andExpect(status().isOk()).andExpect(content().json(
-				"{'id':1,'name':'LifeProof','createdAt': null,'updatedAt': null}"));
+		this.mockMvc.perform(get("/projects/" + existingId)).andExpect(status().isOk())
+				.andExpect(content().json("{'id':1,'name':'LifeProof'}"));
 	}
-	
+
 	@Test
 	public void whenProjectIdDoesNotExistReturnsNotFound() throws Exception {
 		// Given
@@ -103,20 +104,21 @@ public class ProjectResourceTest {
 		// When and Then
 		this.mockMvc.perform(get("/projects/" + notExistingId)).andExpect(status().isNotFound());
 	}
-	
+
 	@Test
 	public void whenSavingANewProjectReturnNewId() throws Exception {
 		// Given
 		Integer id = 1;
 		String name = "LifeProof";
 
-		ProjectDTO projectDtoToCreate = new ProjectDTO();
-		projectDtoToCreate.setName(name);
-		
-		Project projectToCreate = new Project(null, name);
+		ProjectDTO projectDtoToCreate = new ProjectDTO(name);
+
+		Project projectToCreate = ProjectBuilder.newProject().withName(name).now();
+
 		given(projectService.fromDTO(projectDtoToCreate)).willReturn(projectToCreate);
 
-		Project newProject = new Project(id, name);
+		Project newProject = ProjectBuilder.newProject().withId(id).withName(name).now();
+
 		given(projectService.create(projectToCreate)).willReturn(newProject);
 
 		String inputJson = "{\"name\":\"LifeProof\", \"type\": 1}";
@@ -127,24 +129,24 @@ public class ProjectResourceTest {
 				.andExpect(header().string(HttpHeaders.LOCATION, "http://localhost/projects/" + id));
 
 	}
-	
+
 	@Test
 	public void whenUpdatingAProjectReturnsStatusNoContent() throws Exception {
 		// Given
 		String name = "LifeProof";
 		Integer existingCode = 1;
 
-		ProjectDTO projectDtoToFind = new ProjectDTO();
-		projectDtoToFind.setName(name);		
+		ProjectDTO projectDtoToFind = new ProjectDTO(name);
 
-		Project projectToFind = new Project(null, name);
+		Project projectToFind = ProjectBuilder.newProject().withName(name).now();
+
 		given(projectService.fromDTO(projectDtoToFind)).willReturn(projectToFind);
 
 		String inputJson = "{\"name\":\"LifeProof\", \"type\": 1}";
 
 		// When and Then
-		this.mockMvc
-				.perform(put("/projects/" + existingCode).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
+		this.mockMvc.perform(
+				put("/projects/" + existingCode).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
 				.andExpect(status().isNoContent());
 	}
 

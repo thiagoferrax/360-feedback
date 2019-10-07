@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.agile.feedback.builders.FeedbackFormBuilder;
+import com.agile.feedback.builders.ProjectBuilder;
+import com.agile.feedback.builders.TeamMemberBuilder;
 import com.agile.feedback.dtos.FeedbackFormDTO;
 import com.agile.feedback.enums.TeamMemberType;
 import com.agile.feedback.exceptions.FeedbackFormNotFoundException;
@@ -62,7 +66,7 @@ public class FeedbackFormResourceTest {
 
 	@MockBean
 	private FeedbackItemService feedbackItemService;
-	
+
 	@MockBean
 	private CompanyRepository companyRepository;
 
@@ -81,20 +85,30 @@ public class FeedbackFormResourceTest {
 	@MockBean
 	private EvaluationRepository evaluationRepository;
 
+	private Project edoc;
+
+	private TeamMember thiago;
+
+	@Before
+	public void setUp() {
+		edoc = ProjectBuilder.newProject().withId(1).withName("EDOC").now();
+		thiago = TeamMemberBuilder.newTeamMember().withId(1).withName("Thiago").withType(TeamMemberType.DEVELOPER)
+				.withEmail("thiago@email.com").now();
+	}
+
 	@Test
 	public void whenFeedbackFormIdExistsReturnsExistingFeedbackForm() throws Exception {
 		// Given
 		Integer existingId = 1;
 
-		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedbackForm = new FeedbackForm(existingId, "360 Dataprev", "360 Dataprev", project, author);
+		FeedbackForm feedbackForm = FeedbackFormBuilder.newFeedbackForm().withId(existingId).withName("360 Dataprev")
+				.withDescription("360 Feedback Dataprev").withProject(edoc).withAuthor(thiago).now();
 
 		given(feedbackFormService.find(existingId)).willReturn(feedbackForm);
 
 		// When and Then
 		this.mockMvc.perform(get("/feedbackForms/" + existingId)).andExpect(status().isOk())
-				.andExpect(content().json("{'id':1,'name':'360 Dataprev','createdAt': null,'updatedAt': null}"));
+				.andExpect(content().json("{'id':1,'name':'360 Dataprev', 'description':'360 Feedback Dataprev'}"));
 	}
 
 	@Test
@@ -114,22 +128,18 @@ public class FeedbackFormResourceTest {
 		// Given
 		Integer id = 1;
 		String name = "360 Dataprev";
-		String description = "360 Dataprev";
+		String description = "360 Feedback Dataprev";
 
-		FeedbackFormDTO feedbackFormDtoToCreate = new FeedbackFormDTO();
-		feedbackFormDtoToCreate.setName(name);
-		feedbackFormDtoToCreate.setDescription(description);
-
-		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedbackFormToCreate = new FeedbackForm(null, name, "360 Dataprev", project, author);
+		FeedbackFormDTO feedbackFormDtoToCreate = new FeedbackFormDTO(name, description);
+		FeedbackForm feedbackFormToCreate = new FeedbackForm(null, name, description, edoc, thiago);
 
 		given(feedbackFormService.fromDTO(feedbackFormDtoToCreate)).willReturn(feedbackFormToCreate);
 
-		FeedbackForm newFeedbackForm = new FeedbackForm(id, name, "360 Dataprev", project, author);
+		FeedbackForm newFeedbackForm = new FeedbackForm(id, name, description, edoc, thiago);
+
 		given(feedbackFormService.create(feedbackFormToCreate)).willReturn(newFeedbackForm);
 
-		String inputJson = "{\"name\":\"360 Dataprev\",\"description\":\"360 Dataprev\"}";
+		String inputJson = "{\"name\":\"360 Dataprev\",\"description\":\"360 Feedback Dataprev\"}";
 
 		// When and Then
 		this.mockMvc.perform(post("/feedbackForms/").contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
@@ -147,12 +157,10 @@ public class FeedbackFormResourceTest {
 		FeedbackFormDTO feedbackFormDtoToFind = new FeedbackFormDTO();
 		feedbackFormDtoToFind.setName(name);
 
-		TeamMember author = new TeamMember(1, "Thiago", TeamMemberType.DEVELOPER, "thiago@email.com");
-		Project project = new Project(1, "EDOC");
-		FeedbackForm feedbackFormToFind = new FeedbackForm(null, name, "360 Dataprev", project, author);
+		FeedbackForm feedbackFormToFind = new FeedbackForm(null, name, "360 Feedback Dataprev", edoc, thiago);
 		given(feedbackFormService.fromDTO(feedbackFormDtoToFind)).willReturn(feedbackFormToFind);
 
-		String inputJson = "{\"name\":\"360 Dataprev\", \"type\": 1, \"email\": \"thiago@email.com\"}";
+		String inputJson = "{\"name\":\"360 Dataprev\",\"description\":\"360 Feedback Dataprev\"}";
 
 		// When and Then
 		this.mockMvc.perform(
