@@ -134,7 +134,9 @@ public class EvaluationResourceTest {
 		// Given
 		Integer id = 1;
 		Double grade = 10.0;
-		EvaluationDTO evaluationDtoToCreate = new EvaluationDTO(grade);
+		
+		EvaluationDTO evaluationDtoToCreate = new EvaluationDTO();
+		evaluationDtoToCreate.setGrade(grade);
 
 		FeedbackItem feedbackItem = new FeedbackItem(1, "Technical Experience", "Level of Technical Experience", true,
 				feedback360);
@@ -162,7 +164,8 @@ public class EvaluationResourceTest {
 		Integer existingId = 1;
 		Double grade = 10.0;
 
-		EvaluationDTO evaluationDtoToFind = new EvaluationDTO(grade);
+		EvaluationDTO evaluationDtoToFind = new EvaluationDTO();
+		evaluationDtoToFind.setGrade(grade);
 
 		FeedbackItem feedbackItem = new FeedbackItem(existingId, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);

@@ -113,7 +113,10 @@ public class CompanyResourceTest {
 		Integer id = 1;
 		String name = "Dataprev";
 
-		CompanyDTO companyDtoToCreate = new CompanyDTO(name, CompanyType.HEAD_OFFICE.getCodigo());
+		CompanyDTO companyDtoToCreate = new CompanyDTO();
+		companyDtoToCreate.setName(name);
+		companyDtoToCreate.setType(CompanyType.HEAD_OFFICE.getCodigo());
+		
 		Company companyToCreate = CompanyBuilder.newCompany().withName(name).withType(CompanyType.HEAD_OFFICE).now();
 
 		given(companyService.fromDTO(companyDtoToCreate)).willReturn(companyToCreate);
@@ -137,7 +140,10 @@ public class CompanyResourceTest {
 		String name = "Dataprev";
 		Integer existingCode = 1;
 
-		CompanyDTO companyDtoToFind = new CompanyDTO(name, CompanyType.HEAD_OFFICE.getCodigo());
+		CompanyDTO companyDtoToFind = new CompanyDTO();
+		companyDtoToFind.setName(name);
+		companyDtoToFind.setType(CompanyType.HEAD_OFFICE.getCodigo());
+		
 		Company companyToFind = CompanyBuilder.newCompany().withName(name).withType(CompanyType.HEAD_OFFICE).now();
 
 		given(companyService.fromDTO(companyDtoToFind)).willReturn(companyToFind);

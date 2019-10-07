@@ -23,15 +23,6 @@ public class CompanyDTO implements Serializable {
 	@JsonIgnore
 	private Company headOffice;
 
-	public CompanyDTO() {
-	}
-	
-	public CompanyDTO(@NotNull @NotEmpty String name, @NotNull Integer type) {
-		super();
-		this.name = name;
-		this.type = type;
-	}
-
 	public Integer getId() {
 		return id;
 	}

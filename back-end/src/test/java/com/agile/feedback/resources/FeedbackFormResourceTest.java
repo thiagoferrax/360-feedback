@@ -130,7 +130,10 @@ public class FeedbackFormResourceTest {
 		String name = "360 Dataprev";
 		String description = "360 Feedback Dataprev";
 
-		FeedbackFormDTO feedbackFormDtoToCreate = new FeedbackFormDTO(name, description);
+		FeedbackFormDTO feedbackFormDtoToCreate = new FeedbackFormDTO();
+		feedbackFormDtoToCreate.setName(name);
+		feedbackFormDtoToCreate.setDescription(description);
+		
 		FeedbackForm feedbackFormToCreate = new FeedbackForm(null, name, description, edoc, thiago);
 
 		given(feedbackFormService.fromDTO(feedbackFormDtoToCreate)).willReturn(feedbackFormToCreate);

@@ -100,8 +100,8 @@ public class TeamMemberResourceTest {
 		// Given
 		Integer notExistingId = 2;
 
-		given(teamMemberService.find(notExistingId)).willThrow(
-				new ObjectNotFoundException(TeamMemberService.TEAM_MEMBER_NOT_FOUND_FOR_ID));
+		given(teamMemberService.find(notExistingId))
+				.willThrow(new ObjectNotFoundException(TeamMemberService.TEAM_MEMBER_NOT_FOUND_FOR_ID));
 
 		// When and Then
 		this.mockMvc.perform(get("/teamMembers/" + notExistingId)).andExpect(status().isNotFound());
@@ -112,9 +112,14 @@ public class TeamMemberResourceTest {
 		// Given
 		Integer id = 1;
 		String name = "Thiago";
+		Integer type = TeamMemberType.DEVELOPER.getCodigo();
 		String email = "thiago@email.com";
 
-		TeamMemberDTO teamMemberDtoToCreate = new TeamMemberDTO(name, TeamMemberType.DEVELOPER.getCodigo(), email);
+		TeamMemberDTO teamMemberDtoToCreate = new TeamMemberDTO();
+		teamMemberDtoToCreate.setName(name);
+		teamMemberDtoToCreate.setType(type);
+		teamMemberDtoToCreate.setEmail(email);
+
 		TeamMember teamMemberToCreate = TeamMemberBuilder.newTeamMember().withName(name)
 				.withType(TeamMemberType.DEVELOPER).withEmail(email).now();
 
@@ -139,9 +144,13 @@ public class TeamMemberResourceTest {
 		// Given
 		Integer existingCode = 1;
 		String name = "Thiago";
+		Integer type = TeamMemberType.DEVELOPER.getCodigo();
 		String email = "thiago@email.com";
 
-		TeamMemberDTO teamMemberDtoToFind = new TeamMemberDTO(name, TeamMemberType.DEVELOPER.getCodigo(), email);
+		TeamMemberDTO teamMemberDtoToFind = new TeamMemberDTO();
+		teamMemberDtoToFind.setName(name);
+		teamMemberDtoToFind.setType(type);
+		teamMemberDtoToFind.setEmail(email);
 
 		TeamMember teamMemberToFind = new TeamMember(null, name, TeamMemberType.DEVELOPER, "thiago@email.com");
 		given(teamMemberService.fromDTO(teamMemberDtoToFind)).willReturn(teamMemberToFind);

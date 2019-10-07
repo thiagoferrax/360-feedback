@@ -131,7 +131,9 @@ public class FeedbackItemResourceTest {
 		String name = "Technical Experience";
 		String description = "Level of Technical Experience";
 
-		FeedbackItemDTO feedbackItemDtoToCreate = new FeedbackItemDTO(name, description);
+		FeedbackItemDTO feedbackItemDtoToCreate = new FeedbackItemDTO();
+		feedbackItemDtoToCreate.setName(name);
+		feedbackItemDtoToCreate.setDescription(description);
 
 		FeedbackItem feedbackItemToCreate = new FeedbackItem(null, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);
@@ -157,7 +159,9 @@ public class FeedbackItemResourceTest {
 		String name = "Technical Experience";
 		String description = "Level of Technical Experience";
 
-		FeedbackItemDTO feedbackItemDtoToFind = new FeedbackItemDTO(name, description);
+		FeedbackItemDTO feedbackItemDtoToFind = new FeedbackItemDTO();
+		feedbackItemDtoToFind.setName(name);
+		feedbackItemDtoToFind.setDescription(description);
 
 		FeedbackItem feedbackItemToFind = new FeedbackItem(null, "Technical Experience",
 				"Level of Technical Experience", true, feedback360);

@@ -99,7 +99,7 @@ public class ProjectResourceTest {
 		Integer notExistingId = 2;
 
 		given(projectService.find(notExistingId))
-				.willThrow(new ObjectNotFoundException(ProjectService.PROJECT_NOT_FOUND_FOR_ID + notExistingId));
+				.willThrow(new ObjectNotFoundException(ProjectService.PROJECT_NOT_FOUND_FOR_ID));
 
 		// When and Then
 		this.mockMvc.perform(get("/projects/" + notExistingId)).andExpect(status().isNotFound());
@@ -111,7 +111,8 @@ public class ProjectResourceTest {
 		Integer id = 1;
 		String name = "LifeProof";
 
-		ProjectDTO projectDtoToCreate = new ProjectDTO(name);
+		ProjectDTO projectDtoToCreate = new ProjectDTO();
+		projectDtoToCreate.setName(name);
 
 		Project projectToCreate = ProjectBuilder.newProject().withName(name).now();
 
@@ -136,7 +137,8 @@ public class ProjectResourceTest {
 		String name = "LifeProof";
 		Integer existingCode = 1;
 
-		ProjectDTO projectDtoToFind = new ProjectDTO(name);
+		ProjectDTO projectDtoToFind = new ProjectDTO();
+		projectDtoToFind.setName(name);
 
 		Project projectToFind = ProjectBuilder.newProject().withName(name).now();
 
