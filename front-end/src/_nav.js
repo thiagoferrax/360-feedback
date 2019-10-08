@@ -20,7 +20,7 @@ export default {
     },
     {
       name: 'Companies',
-      url: '/theme/colors',
+      url: '/company',
       icon: 'icon-briefcase',
     },
     {
