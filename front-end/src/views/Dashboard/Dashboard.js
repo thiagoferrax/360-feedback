@@ -23,6 +23,8 @@ import {
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 
+import { connect } from 'react-redux'
+
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 
 const brandPrimary = getStyle('--primary')
@@ -480,6 +482,7 @@ class Dashboard extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
+    const {credit, debt} = this.props.summary
 
     return (
       <div className="animated fadeIn">
@@ -500,7 +503,7 @@ class Dashboard extends Component {
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
-                <div className="text-value">9.823</div>
+                <div className="text-value">{`R$ ${credit}`}</div>
                 <div>Members online</div>
               </CardBody>
               <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
@@ -524,7 +527,7 @@ class Dashboard extends Component {
                     </DropdownMenu>
                   </Dropdown>
                 </ButtonGroup>
-                <div className="text-value">9.823</div>
+                <div className="text-value">{`R$ ${debt}`}</div>
                 <div>Members online</div>
               </CardBody>
               <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
@@ -1126,4 +1129,6 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+
+const mapStateToProps = state => ({summary: state.dashboard.summary})
+export default connect(mapStateToProps)(Dashboard)
