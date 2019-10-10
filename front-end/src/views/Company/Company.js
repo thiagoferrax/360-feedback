@@ -24,7 +24,7 @@ class Company extends Component {
   }
 
   openNewCompanyModal() {
-    $('#exampleModal').modal('show')
+    $('#companyCreateModal').modal('show')
   }
 
   getRowData() {
@@ -86,45 +86,55 @@ class Company extends Component {
           </Col>
         </Row>
         <Row>
-          <div>
-            {/* Modal */}
-            <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">New Company</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
-                  <div className="modal-body">
-                    <form>
-                      <div className="form-group">
-                        <label htmlFor="recipient-name" className="form-control-label">Name:</label>
-                        <input type="text" className="form-control" id="recipient-name" />
+          {/* Modal */}
+          <div className="modal fade" id="companyCreateModal" tabIndex={-1} role="dialog" aria-labelledby="companyCreateModalLabel" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="companyCreateModalLabel">
+                    <strong>Company</strong>
+                    {' '}
+                    <small>Create</small></h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form>
+                    <div className="form-group">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="nav-icon icon-briefcase" />
+                          </span>
+                        </div>
+                        <input className="form-control" id="name" type="text" name="name" placeholder="Name" autoComplete="name" />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="message-text" className="form-control-label">Type:</label>
+                    </div>
+                    <div className="form-group">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="nav-icon icon-options" />
+                          </span>
+                        </div>
                         <select class="form-control" id="message-text">
                           <option value="2014">Head Office</option>
                           <option value="2015">Branch</option>
                         </select>
                       </div>
-                    </form>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary">Save</button>
-                  </div>
+                    </div>
+                  </form>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-primary">Save</button>
                 </div>
               </div>
             </div>
           </div>
-
         </Row>
-
       </div>
-
     );
   }
 }
