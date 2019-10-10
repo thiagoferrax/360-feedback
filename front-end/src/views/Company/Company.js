@@ -7,6 +7,9 @@ import { bindActionCreators } from 'redux'
 import { getCompanies } from '../Company/CompanyActions'
 import './Company.css'
 
+import $ from 'jquery'
+import 'bootstrap';
+
 class Company extends Component {
 
   getFormatedDate(isoDate) {
@@ -16,8 +19,12 @@ class Company extends Component {
     return `${date.toLocaleDateString('en-US', options)} at ${date.toLocaleTimeString('en-US')}`
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getCompanies()
+  }
+
+  openNewCompanyModal() {
+    $('#exampleModal').modal('show')
   }
 
   getRowData() {
@@ -25,14 +32,14 @@ class Company extends Component {
     const companies = this.props.companies
 
     const rowData = companies.map(company => (
-      <tr>
+      <tr key="${company.id}">
         <td>{company.id}</td>
         <td>{company.name}</td>
         <td>{company.type}</td>
         <td>{this.getFormatedDate(company.createdAt)}</td>
         <td>
-          <Button color="secondary"><i className="fa fa-edit"></i></Button>&nbsp;
-          <Button color="danger"><i className="fa fa-trash"></i></Button>          
+          <Button color="secondary"><i className="nav-icon icon-pencil"></i></Button>&nbsp;
+          <Button color="danger"><i className="nav-icon icon-trash"></i></Button>
         </td>
       </tr>
     ))
@@ -47,9 +54,9 @@ class Company extends Component {
         <Row>
           <Col xs="12" lg="12">
             <Card>
-              <CardHeader>
-                    <i className="fa fa-align-justify"></i> Companies
-                    <Button color="primary"><i className="fa fa-plus"></i></Button>
+              <CardHeader className="lineHeight">
+                <i className="fa fa-align-justify"></i> Companies
+                    <Button color="primary" className="alignRight" onClick={this.openNewCompanyModal}><i className="nav-icon icon-plus"></i></Button>
               </CardHeader>
               <CardBody>
                 <Table responsive striped>
@@ -77,6 +84,43 @@ class Company extends Component {
               </CardBody>
             </Card>
           </Col>
+        </Row>
+        <Row>
+          <div>
+            {/* Modal */}
+            <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">New Company</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    <form>
+                      <div className="form-group">
+                        <label htmlFor="recipient-name" className="form-control-label">Name:</label>
+                        <input type="text" className="form-control" id="recipient-name" />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="message-text" className="form-control-label">Type:</label>
+                        <select class="form-control" id="message-text">
+                          <option value="2014">Head Office</option>
+                          <option value="2015">Branch</option>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </Row>
 
       </div>

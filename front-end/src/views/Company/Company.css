@@ -3,3 +3,16 @@
     vertical-align: middle;
     border-top: 1px solid #c8ced3;
 }
+
+.lineHeight {
+    line-height: 35px;
+}
+
+.alignRight {
+    float: right;
+}
+
+.modal-open{
+    padding-right: 0 !important;
+    overflow-y: auto;
+   }
