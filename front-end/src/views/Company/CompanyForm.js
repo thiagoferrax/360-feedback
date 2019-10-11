@@ -3,10 +3,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { showOrHideHeadOffices } from './CompanyActions'
+
 class CompanyForm extends Component {
 
   getHeadOfficeCompanies() {
-    const headOfficeCompanies = this.props.companies.filter(company => company.type == 'HEAD_OFFICE')
+
+    if(!this.props.showHeadOffices) {
+      return;
+    }
+
+    const headOfficeCompanies = this.props.companies.filter(company => company.type === 'HEAD_OFFICE')
     const options = headOfficeCompanies.map(company => (
       <option key={`options_${company.id}`} value={company}>{`${company.id} - ${company.name}`}</option>
     ))
@@ -45,7 +52,7 @@ class CompanyForm extends Component {
                 <i className="nav-icon icon-list" />
               </span>
             </div>
-            <select className="form-control" id="type">
+            <select className="form-control" id="type" onChange={event => this.props.showOrHideHeadOffices(event)}>
               <option value="1">Head Office</option>
               <option value="2">Branch</option>
             </select>
@@ -57,6 +64,6 @@ class CompanyForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({})
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+const mapStateToProps = state => ({showHeadOffices: state.company.showHeadOffices})
+const mapDispatchToProps = dispatch => bindActionCreators({showOrHideHeadOffices}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyForm)
