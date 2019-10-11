@@ -12,7 +12,7 @@
     float: right;
 }
 
-.modal-open{
+.modal-open {
     padding-right: 0 !important;
     overflow-y: auto;
-   }
+}

@@ -18,14 +18,20 @@ class CompanyForm extends Component {
               <i className="nav-icon icon-list" />
             </span>
           </div>
-          <select className="form-control" id="headOffice">{options}</select>
+          <select className="form-control" id="headOffice">
+            <option value="" disabled selected>Choose Head Office</option>
+            {options}
+          </select>
         </div>
       </div>
     )
   }
 
-  render() {
+  teste(event) {
+    alert(event)
+  }
 
+  render() {
     return (
       <form>
         <div className="form-group">
@@ -46,6 +52,7 @@ class CompanyForm extends Component {
               </span>
             </div>
             <select className="form-control" id="type">
+              <option value="" disabled selected>Choose Type</option>
               <option value="1">Head Office</option>
               <option value="2">Branch</option>
             </select>
@@ -53,7 +60,7 @@ class CompanyForm extends Component {
         </div>
         {this.getHeadOfficeCompanies()}
       </form>
-    );
+    )
   }
 }
 
